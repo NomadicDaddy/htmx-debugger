@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" class="h-full bg-gray-100">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/htmx-debugger-logo-16.png" />
+		<link href="output.css" rel="stylesheet" />
+		<title>htmx-debugger</title>
+	</head>
+	<body class="h-full">
+		<div class="min-h-full">
+			<header>
+				<nav class="bg-gray-800">
+					<div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-6">
+						<div class="flex h-16 items-center justify-between">
+							<div class="flex items-center">
+								<div class="flex-shrink-0">
+									<img class="h-8 w-8" src="/htmx-debugger-logo-32.png" alt="htmx-debugger" />
+								</div>
+								<div class="ml-10 flex items-center space-x-4">
+									<h1 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">htmx-debugger</h1>
+									<div id="connection-status-container" class="w-24 text-gray-300">
+										<span class="mr-2 inline-block h-2 w-2 rounded-full bg-red-500"></span>Disconnected
+									</div>
+								</div>
+							</div>
+							<div class="flex items-center">
+								<button
+									id="clear-button"
+									class="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+									Clear Events
+								</button>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</header>
+
+			<main>
+				<div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+					<div class="px-4 py-6 sm:px-0">
+						<div class="rounded-lg border-4 border-dashed border-gray-200 p-4">
+							<div id="controls" class="mb-6 flex flex-wrap items-center gap-4">
+								<div class="flex-grow">
+									<input
+										type="text"
+										id="search-input"
+										placeholder="Search events..."
+										class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+								</div>
+								<div class="flex space-x-2">
+									<button
+										class="filter-button active rounded-md bg-blue-500 px-3 py-1 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+										data-filter="ALL">
+										All
+									</button>
+									<button
+										class="filter-button rounded-md bg-gray-200 px-3 py-1 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+										data-filter="REQUEST">
+										Requests
+									</button>
+									<button
+										class="filter-button rounded-md bg-gray-200 px-3 py-1 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+										data-filter="RESPONSE">
+										Responses
+									</button>
+								</div>
+							</div>
+							<div id="debug-info" class="overflow-hidden rounded-lg bg-white shadow">
+								<!-- Debug information will be dynamically inserted here -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<script src="panel.js"></script>
+	</body>
+</html>

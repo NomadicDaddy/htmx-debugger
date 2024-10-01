@@ -1,0 +1,46 @@
+{
+	"manifest_version": 3,
+	"name": "htmx-debugger",
+	"version": "1.0.0",
+	"description": "htmx-debugger - a debugging tool for htmx applications",
+	"permissions": ["activeTab", "scripting", "storage", "alarms"],
+	"host_permissions": ["https://*/", "http://*/"],
+	"action": {
+		"default_icon": {
+			"16": "htmx-debugger-logo-16.png",
+			"32": "htmx-debugger-logo-32.png",
+			"48": "htmx-debugger-logo-48.png",
+			"128": "htmx-debugger-logo-128.png"
+		},
+		"default_title": "htmx-debugger"
+	},
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content.js"],
+			"run_at": "document_idle"
+		}
+	],
+	"devtools_page": "devtools.html",
+	"web_accessible_resources": [
+		{
+			"resources": ["content.js"],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"icons": {
+		"16": "htmx-debugger-logo-16.png",
+		"32": "htmx-debugger-logo-32.png",
+		"48": "htmx-debugger-logo-48.png",
+		"128": "htmx-debugger-logo-128.png"
+	},
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self';"
+	},
+	"minimum_chrome_version": "88",
+	"update_url": "https://clients2.google.com/service/update2/crx"
+}
