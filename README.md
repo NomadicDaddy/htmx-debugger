@@ -4,6 +4,8 @@
 
 htmx-debugger is a powerful Chrome extension designed to help developers debug and analyze htmx applications. It provides a comprehensive and user-friendly interface for viewing htmx events, requests, and responses in real-time. This tool is essential for understanding and troubleshooting htmx-powered web applications, making the development process smoother and more efficient.
 
+![htmx-debugger panel with events](htmx-panel-with-events.jpg)
+
 ## Features
 
 -   Real-time capture and display of htmx events
