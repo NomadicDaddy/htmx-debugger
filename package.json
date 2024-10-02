@@ -1,6 +1,6 @@
 {
 	"name": "htmx-debugger",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
 	"author": "Phillip Beazley <phillip@beazley.org>",
 	"license": "MIT",
@@ -20,7 +20,7 @@
 	"devDependencies": {
 		"@eslint/js": "^9.11.1",
 		"eslint": "^9.11.1",
-		"globals": "^15.9.0",
+		"globals": "^15.10.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.8",
 		"tailwindcss": "^3.4.13"

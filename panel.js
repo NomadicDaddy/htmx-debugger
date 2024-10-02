@@ -105,31 +105,45 @@ function createEventElement(eventData) {
 
 	if (eventData.target) {
 		const targetInfo = document.createElement('div');
-		targetInfo.innerHTML = `
-			<h5 class="font-bold mt-2">Target Element:</h5>
-			<p>Tag: ${eventData.target.tagName || 'N/A'}</p>
-			<p>ID: ${eventData.target.id || 'N/A'}</p>
-			<p>Class: ${eventData.target.className || 'N/A'}</p>
-		`;
 
-		// Explicitly handle HX attributes
+		const targetHeader = document.createElement('h5');
+		targetHeader.className = 'font-bold mt-2';
+		targetHeader.textContent = 'Target Element:';
+		targetInfo.appendChild(targetHeader);
+
+		const tagP = document.createElement('p');
+		tagP.textContent = `Tag: ${eventData.target.tagName || 'N/A'}`;
+		targetInfo.appendChild(tagP);
+
+		const idP = document.createElement('p');
+		idP.textContent = `ID: ${eventData.target.id || 'N/A'}`;
+		targetInfo.appendChild(idP);
+
+		const classP = document.createElement('p');
+		classP.textContent = `Class: ${eventData.target.className || 'N/A'}`;
+		targetInfo.appendChild(classP);
+
+		// Handle HX Attributes
 		if (eventData.target.hxAttributes && eventData.target.hxAttributes.length > 0) {
-			const hxAttributesHeader = document.createElement('h5');
-			hxAttributesHeader.textContent = 'HX Attributes:';
-			hxAttributesHeader.className = 'font-bold mt-2 text-blue-600';
-			targetInfo.appendChild(hxAttributesHeader);
+			const hxHeader = document.createElement('h5');
+			hxHeader.className = 'font-bold mt-2 text-blue-600';
+			hxHeader.textContent = 'HX Attributes:';
+			targetInfo.appendChild(hxHeader);
 
-			const hxAttributesList = document.createElement('ul');
-			hxAttributesList.className = 'list-disc pl-5';
+			const hxList = document.createElement('ul');
+			hxList.className = 'list-disc pl-5';
 			eventData.target.hxAttributes.forEach((attr) => {
 				const li = document.createElement('li');
 				li.textContent = `${attr.name}: ${attr.value}`;
 				li.className = 'text-blue-600';
-				hxAttributesList.appendChild(li);
+				hxList.appendChild(li);
 			});
-			targetInfo.appendChild(hxAttributesList);
+			targetInfo.appendChild(hxList);
 		} else {
-			targetInfo.innerHTML += '<p class="text-gray-500">No HX attributes found.</p>';
+			const noHx = document.createElement('p');
+			noHx.className = 'text-gray-500';
+			noHx.textContent = 'No HX attributes found.';
+			targetInfo.appendChild(noHx);
 		}
 
 		eventContent.appendChild(targetInfo);
