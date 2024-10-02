@@ -1,0 +1,42 @@
+{
+	"manifest_version": 2,
+	"name": "htmx-debugger",
+	"version": "1.0.3",
+	"description": "htmx-debugger - a debugging tool for htmx applications",
+	"permissions": ["tabs", "activeTab", "storage", "alarms", "<all_urls>"],
+	"background": {
+		"scripts": ["background.js"],
+		"type": "module"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content.js"],
+			"run_at": "document_idle"
+		}
+	],
+	"browser_action": {
+		"default_icon": {
+			"16": "htmx-debugger-logo-16.png",
+			"32": "htmx-debugger-logo-32.png",
+			"48": "htmx-debugger-logo-48.png",
+			"128": "htmx-debugger-logo-128.png"
+		},
+		"default_title": "htmx-debugger"
+	},
+	"devtools_page": "devtools.html",
+	"web_accessible_resources": ["content.js"],
+	"icons": {
+		"16": "htmx-debugger-logo-16.png",
+		"32": "htmx-debugger-logo-32.png",
+		"48": "htmx-debugger-logo-48.png",
+		"128": "htmx-debugger-logo-128.png"
+	},
+	"content_security_policy": "script-src 'self'; object-src 'self';",
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "htmx-debugger@beazley.org",
+			"strict_min_version": "112.0"
+		}
+	}
+}

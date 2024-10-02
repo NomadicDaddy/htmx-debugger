@@ -1,8 +1,8 @@
-# htmx-debugger v1.0.0 - 2024-09-30
+# htmx-debugger v1.0.3 - 2024-10-02
 
 ## Overview
 
-htmx-debugger is a powerful Chrome extension designed to help developers debug and analyze htmx applications. It provides a comprehensive and user-friendly interface for viewing htmx events, requests, and responses in real-time. This tool is essential for understanding and troubleshooting htmx-powered web applications, making the development process smoother and more efficient.
+htmx-debugger is a powerful browser extension (compatible with Chrome and Firefox) designed to help developers debug and analyze htmx applications. It provides a comprehensive and user-friendly interface for viewing htmx events, requests, and responses in real-time. This tool is essential for understanding and troubleshooting htmx-powered web applications, making the development process smoother and more efficient.
 
 ![htmx-debugger panel with events](htmx-panel-with-events.jpg)
 
@@ -26,19 +26,26 @@ htmx-debugger is a powerful Chrome extension designed to help developers debug a
 
 ## Installation
 
-### Chrome Web Store (Recommended)
+### Chrome Web Store (Recommended - ONCE PUBLISHED, STILL TBD A/O 2024-10-02)
 
-1. Visit the [htmx-debugger page](https://chrome.google.com/webstore/detail/htmx-debugger/[extension-id]) on the Chrome Web Store.
+1. Visit the [htmx-debugger page](https://chrome.google.com/webstore/detail/htmx-debugger/kjafpfamndifhkidbjebdnfjiebgdckf) on the Chrome Web Store.
 2. Click the "Add to Chrome" button.
 3. Confirm the installation when prompted.
 
-### Manual Installation (For developers)
+### Manual Chrome Installation
 
 1. Clone this repository or download the source code.
 2. Open Google Chrome and navigate to `chrome://extensions/`.
 3. Enable "Developer mode" by toggling the switch in the top right corner.
 4. Click on "Load unpacked" and select the directory containing the extension files.
 5. The htmx-debugger extension should now appear in your list of installed extensions.
+
+### Manual Firefox Installation
+
+1. Download the latest release file for Firefox browsers.
+2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
+3. Click on "Load Temporary Add-on..." and select the downloaded release file.
+4. The htmx-debugger extension should now appear in your list of installed extensions.
 
 ## Usage
 
@@ -124,6 +131,8 @@ By using htmx-debugger, users can be assured that their privacy is respected and
 
 ## Version History
 
+-   v1.0.3 (2024-10-02): Minor update and new Firefox release
+    -   Fixed sanitization issue recommended by Firefox
 -   v1.0.0 (2024-09-30): Initial release
     -   core features implemented
     -   Chrome Web Store release

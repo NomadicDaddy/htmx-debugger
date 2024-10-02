@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "htmx-debugger",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
 	"permissions": ["activeTab", "scripting", "storage", "alarms"],
 	"host_permissions": ["https://*/", "http://*/"],
@@ -28,7 +28,7 @@
 	"devtools_page": "devtools.html",
 	"web_accessible_resources": [
 		{
-			"resources": ["content.js"],
+			"resources": ["content.js", "panel.js"],
 			"matches": ["<all_urls>"]
 		}
 	],
