@@ -1,6 +1,6 @@
 {
 	"name": "htmx-debugger",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
 	"author": "Phillip Beazley <phillip@beazley.org>",
 	"license": "MIT",

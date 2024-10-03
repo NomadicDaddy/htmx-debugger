@@ -1,10 +1,9 @@
 {
 	"manifest_version": 3,
 	"name": "htmx-debugger",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
-	"permissions": ["alarms"],
-	"host_permissions": ["https://*/", "http://*/"],
+	"permissions": ["activeTab", "alarms"],
 	"action": {
 		"default_icon": {
 			"16": "htmx-debugger-logo-16.png",

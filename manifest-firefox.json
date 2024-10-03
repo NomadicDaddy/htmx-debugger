@@ -1,9 +1,9 @@
 {
 	"manifest_version": 2,
 	"name": "htmx-debugger",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
-	"permissions": ["alarms", "<all_urls>"],
+	"permissions": ["activeTab", "alarms"],
 	"background": {
 		"scripts": ["background.js"],
 		"type": "module"

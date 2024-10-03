@@ -1,4 +1,4 @@
-# htmx-debugger v1.0.3 - 2024-10-02
+# htmx-debugger v1.0.4 - 2024-10-03
 
 ## Overview
 
@@ -26,7 +26,7 @@ htmx-debugger is a powerful browser extension (compatible with Chrome and Firefo
 
 ## Installation
 
-### Chrome Web Store (Recommended - ONCE PUBLISHED, STILL TBD A/O 2024-10-02)
+### Chrome Web Store (Recommended - ONCE PUBLISHED, STILL TBD A/O 2024-10-03)
 
 1. Visit the [htmx-debugger page](https://chrome.google.com/webstore/detail/htmx-debugger/kjafpfamndifhkidbjebdnfjiebgdckf) on the Chrome Web Store.
 2. Click the "Add to Chrome" button.
@@ -102,7 +102,9 @@ htmx-debugger is committed to protecting user privacy and does not collect or us
 
 ### Permissions and Their Justifications
 
-1. **alarms**: The alarms permission is used to schedule periodic connection checks, ensuring the debugger maintains a stable connection to the webpage. This improves the reliability of the debugging process.
+1. **activeTab**: This permission is required to access the current tab's content and inject the necessary scripts for debugging htmx events. It allows the extension to interact with the webpage being debugged without requiring broader permissions.
+
+2. **alarms**: The alarms permission is used to schedule periodic connection checks, ensuring the debugger maintains a stable connection to the webpage. This improves the reliability of the debugging process.
 
 ### Single Purpose Description
 
@@ -121,6 +123,7 @@ By using htmx-debugger, users can be assured that their privacy is respected and
 
 ## Version History
 
+-   v1.0.4 (2024-10-03): Fixed excessive permissions per Google review
 -   v1.0.3 (2024-10-02): Minor update and new Firefox release
     -   Fixed sanitization issue recommended by Firefox
 -   v1.0.0 (2024-09-30): Initial release
