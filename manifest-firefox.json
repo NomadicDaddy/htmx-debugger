@@ -3,7 +3,7 @@
 	"name": "htmx-debugger",
 	"version": "1.0.3",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
-	"permissions": ["tabs", "activeTab", "storage", "alarms", "<all_urls>"],
+	"permissions": ["alarms", "<all_urls>"],
 	"background": {
 		"scripts": ["background.js"],
 		"type": "module"

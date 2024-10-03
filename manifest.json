@@ -3,7 +3,7 @@
 	"name": "htmx-debugger",
 	"version": "1.0.3",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
-	"permissions": ["activeTab", "scripting", "storage", "alarms"],
+	"permissions": ["alarms"],
 	"host_permissions": ["https://*/", "http://*/"],
 	"action": {
 		"default_icon": {

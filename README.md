@@ -102,17 +102,7 @@ htmx-debugger is committed to protecting user privacy and does not collect or us
 
 ### Permissions and Their Justifications
 
-1. **activeTab**: This permission is required to access the current tab's content and inject the necessary scripts for debugging htmx events. It allows the extension to interact with the webpage being debugged without requiring broader permissions.
-
-2. **alarms**: The alarms permission is used to schedule periodic connection checks, ensuring the debugger maintains a stable connection to the webpage. This improves the reliability of the debugging process.
-
-3. **host permission**: Host permissions are necessary to allow the extension to function on any webpage that uses htmx. This broad access is required because htmx can be used on any website, and the debugger needs to be able to capture events regardless of the domain.
-
-4. **remote code**: The extension does not execute any remote code. All functionality is contained within the extension package.
-
-5. **scripting**: Scripting permissions are essential for the core functionality of the debugger. They allow the extension to inject the necessary scripts to capture and analyze htmx events on the webpage.
-
-6. **storage**: The storage permission is used to save user preferences and debugging session data locally. This ensures that the user's debugging environment persists between browser sessions and allows for future features like saving and loading debug logs.
+1. **alarms**: The alarms permission is used to schedule periodic connection checks, ensuring the debugger maintains a stable connection to the webpage. This improves the reliability of the debugging process.
 
 ### Single Purpose Description
 
