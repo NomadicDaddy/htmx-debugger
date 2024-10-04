@@ -4,6 +4,7 @@
 	"version": "1.0.4",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
 	"permissions": ["activeTab", "alarms"],
+	"optional_host_permissions": ["<all_urls>"],
 	"action": {
 		"default_icon": {
 			"16": "htmx-debugger-logo-16.png",
@@ -25,12 +26,6 @@
 		}
 	],
 	"devtools_page": "devtools.html",
-	"web_accessible_resources": [
-		{
-			"resources": ["content.js", "panel.js"],
-			"matches": ["<all_urls>"]
-		}
-	],
 	"icons": {
 		"16": "htmx-debugger-logo-16.png",
 		"32": "htmx-debugger-logo-32.png",

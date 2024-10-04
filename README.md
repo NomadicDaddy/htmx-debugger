@@ -26,6 +26,12 @@ htmx-debugger is a powerful browser extension (compatible with Chrome and Firefo
 
 ## Installation
 
+### Firefox Add-Ons (Recommended)
+
+1. Visit the [htmx-debugger page](https://addons.mozilla.org/en-US/firefox/addon/htmx-debugger) on the Firefox Add-Ons website.
+2. Click the "Add to Firefox" button.
+3. Confirm the installation when prompted.
+
 ### Chrome Web Store (Recommended - ONCE PUBLISHED, STILL TBD A/O 2024-10-03)
 
 1. Visit the [htmx-debugger page](https://chrome.google.com/webstore/detail/htmx-debugger/kjafpfamndifhkidbjebdnfjiebgdckf) on the Chrome Web Store.
