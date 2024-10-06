@@ -152,14 +152,14 @@ logWithTimestamp('Background service worker loaded');
 
 // Keep the service worker alive and manage periodic tasks
 chrome.runtime.onInstalled.addListener(() => {
-	console.log('Extension installed or updated');
+	logWithTimestamp('Extension installed or updated');
 	chrome.alarms.create('keep-alive', { periodInMinutes: 1 });
 	chrome.alarms.create('reset-counter', { periodInMinutes: 60 }); // Reset counter every hour
 	chrome.alarms.create('log-stats', { periodInMinutes: 5 }); // Log stats every 5 minutes
 });
 
 chrome.runtime.onUpdateAvailable.addListener(() => {
-	console.log('Extension update available. Reloading...');
+	logWithTimestamp('Extension update available. Reloading...');
 	chrome.runtime.reload();
 });
 
@@ -179,36 +179,28 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 	}
 });
 
+// global error handling
 function reportError(error) {
 	console.error('Error in background script:', error);
 	Object.values(connections).forEach((port) => {
 		port.postMessage({ type: 'ERROR', error: error.message, stack: error.stack });
 	});
 }
-
-// Global error handling
 globalThis.addEventListener('error', (event) => {
-	// Changed from self to globalThis
 	reportError(event.error);
 });
-
 globalThis.addEventListener('unhandledrejection', (event) => {
-	// Changed from self to globalThis
 	reportError(event.reason);
 });
 
-// Example of avoiding window usage in background script
 chrome.runtime.onInstalled.addListener(() => {
-	console.log('Extension installed');
+	logWithTimestamp('Extension installed');
 });
 
-// If you need to communicate with content scripts or popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message.type === 'heartbeat') {
-		// Handle heartbeat message
 		sendResponse({ status: 'alive' });
 	}
-
 	if (message.type === 'HTMX_EVENT') {
 		chrome.runtime.sendMessage({
 			type: 'HTMX_EVENT_FOR_PANEL',

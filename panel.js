@@ -149,6 +149,41 @@ function createEventElement(eventData) {
 		eventContent.appendChild(targetInfo);
 	}
 
+	// Add snapshot information
+	if (eventData.afterSnapshot) {
+		const snapshotInfo = document.createElement('div');
+		snapshotInfo.className = 'mt-4';
+
+		const snapshotHeader = document.createElement('h5');
+		snapshotHeader.className = 'font-bold';
+		snapshotHeader.textContent = 'Element Snapshot:';
+		snapshotInfo.appendChild(snapshotHeader);
+
+		if (eventData.beforeSnapshot) {
+			const beforeHeader = document.createElement('h6');
+			beforeHeader.className = 'font-semibold mt-2';
+			beforeHeader.textContent = 'Before:';
+			snapshotInfo.appendChild(beforeHeader);
+
+			const beforePre = document.createElement('pre');
+			beforePre.className = 'mt-1 p-2 bg-gray-100 rounded overflow-x-auto text-sm';
+			beforePre.textContent = JSON.stringify(eventData.beforeSnapshot, null, 2);
+			snapshotInfo.appendChild(beforePre);
+		}
+
+		const afterHeader = document.createElement('h6');
+		afterHeader.className = 'font-semibold mt-2';
+		afterHeader.textContent = 'After:';
+		snapshotInfo.appendChild(afterHeader);
+
+		const afterPre = document.createElement('pre');
+		afterPre.className = 'mt-1 p-2 bg-gray-100 rounded overflow-x-auto text-sm';
+		afterPre.textContent = JSON.stringify(eventData.afterSnapshot, null, 2);
+		snapshotInfo.appendChild(afterPre);
+
+		eventContent.appendChild(snapshotInfo);
+	}
+
 	const fullDataHeader = document.createElement('h5');
 	fullDataHeader.textContent = 'Full Event Data';
 	fullDataHeader.className = 'font-bold mt-4 cursor-pointer';
@@ -350,6 +385,7 @@ function handleHtmxEvent(event) {
 		timestamps: [eventTimestamp],
 		target: event.target || event.detail?.target || null,
 		detail: event.detail || null,
+		beforeSnapshot: captureElementSnapshot(event.target),
 		// Add any other properties you want to preserve
 	};
 
@@ -365,6 +401,8 @@ function handleHtmxEvent(event) {
 	if (existingEvent) {
 		// If it exists, add the new timestamp to the existing event
 		existingEvent.timestamps.push(eventTimestamp);
+		// Update the afterSnapshot
+		existingEvent.afterSnapshot = captureElementSnapshot(event.target);
 	} else {
 		// Otherwise, add the new event to the group
 		eventGroups[groupName].push(normalizedEvent);
@@ -372,6 +410,18 @@ function handleHtmxEvent(event) {
 
 	// Update the display
 	updateDebugInfo();
+}
+
+function captureElementSnapshot(element) {
+	if (!element) return null;
+	return {
+		outerHTML: element.outerHTML,
+		innerHTML: element.innerHTML,
+		attributes: Array.from(element.attributes).map(attr => ({
+			name: attr.name,
+			value: attr.value
+		}))
+	};
 }
 
 function determineGroupName(event) {
