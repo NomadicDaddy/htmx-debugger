@@ -26,15 +26,9 @@ htmx-debugger is a powerful browser extension (compatible with Chrome and Firefo
 
 ## Installation
 
-### Firefox Add-Ons (Recommended)
+### Chrome Web Store (Recommended)
 
-1. Visit the [htmx-debugger page](https://addons.mozilla.org/en-US/firefox/addon/htmx-debugger) on the Firefox Add-Ons website.
-2. Click the "Add to Firefox" button.
-3. Confirm the installation when prompted.
-
-### Chrome Web Store (Recommended - ONCE PUBLISHED, STILL TBD A/O 2024-10-03)
-
-1. Visit the [htmx-debugger page](https://chrome.google.com/webstore/detail/htmx-debugger/kjafpfamndifhkidbjebdnfjiebgdckf) on the Chrome Web Store.
+1. Visit the [htmx-debugger page](https://chrome.google.com/webstore/detail/fkpjmdhppdadklmcjbifffmjplgoboic) on the Chrome Web Store.
 2. Click the "Add to Chrome" button.
 3. Confirm the installation when prompted.
 
@@ -46,12 +40,20 @@ htmx-debugger is a powerful browser extension (compatible with Chrome and Firefo
 4. Click on "Load unpacked" and select the directory containing the extension files.
 5. The htmx-debugger extension should now appear in your list of installed extensions.
 
+### Firefox Add-Ons (Recommended)
+
+1. Visit the [htmx-debugger page](https://addons.mozilla.org/en-US/firefox/addon/htmx-debugger) on the Firefox Add-Ons website.
+2. Click the "Add to Firefox" button.
+3. Confirm the installation when prompted.
+
 ### Manual Firefox Installation
 
 1. Download the latest release file for Firefox browsers.
 2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
 3. Click on "Load Temporary Add-on..." and select the downloaded release file.
 4. The htmx-debugger extension should now appear in your list of installed extensions.
+
+### Safari Coming Soon
 
 ## Usage
 
