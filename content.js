@@ -43,7 +43,7 @@
 					document.body.addEventListener(event, this.logEvent.bind(this));
 				});
 
-				console.log('htmx event listeners set up');
+				// console.log('htmx event listeners set up');
 			} catch (error) {
 				console.error('Error during htmx-debugger initialization:', error);
 				this.handleError(error);
@@ -53,7 +53,7 @@
 		},
 
 		isExtensionEnvironment: function () {
-			console.log('Checking extension environment...');
+			// console.log('Checking extension environment...');
 			if (typeof chrome === 'undefined') {
 				console.warn('Chrome API is not available');
 				return false;
@@ -64,7 +64,7 @@
 			}
 			try {
 				chrome.runtime.getURL('');
-				console.log('chrome.runtime.id exists:', !!chrome.runtime.id);
+				// console.log('chrome.runtime.id exists:', !!chrome.runtime.id);
 				return true;
 			} catch (error) {
 				console.warn('Extension context is invalid:', error.message);
@@ -148,7 +148,7 @@
 					eventInfo.xhr = this.getXhrInfo(event.detail.xhr);
 				}
 
-				console.log('htmx Event:', eventInfo);
+				// console.log('htmx Event:', eventInfo);
 				this.sendMessage(eventInfo);
 			} catch (error) {
 				console.error('Error logging event:', error);
@@ -164,7 +164,7 @@
 			}
 
 			try {
-				console.log('Sending htmx debug info:', JSON.stringify(data, null, 2));
+				// console.log('Sending htmx debug info:', JSON.stringify(data, null, 2));
 				chrome.runtime.sendMessage(
 					{
 						type: 'HTMX_EVENT',
@@ -177,7 +177,7 @@
 							this.isConnected = false;
 							this.attemptReconnection();
 						} else {
-							console.log('Message sent successfully:', response);
+							// console.log('Message sent successfully:', response);
 							this.reconnectAttempts = 0; // Reset reconnect attempts on successful message
 						}
 					}
@@ -310,7 +310,7 @@
 										console.warn('Connection check failed, retrying...', chrome.runtime.lastError);
 										setTimeout(checkConnection, 1000);
 									} else {
-										console.log('Connection verified:', response);
+										// console.log('Connection verified:', response);
 										this.isConnected = true;
 										this.reconnectAttempts = 0;
 										resolve();
@@ -333,13 +333,13 @@
 
 		startConnectionCheck: function () {
 			const periodicCheck = () => {
-				console.log('Running periodic check...');
+				// console.log('Running periodic check...');
 				try {
 					if (this.isExtensionEnvironment()) {
-						console.log('Extension environment valid, verifying connection...');
+						// console.log('Extension environment valid, verifying connection...');
 						this.verifyConnection()
 							.then(() => {
-								console.log('Periodic connection check successful');
+								// console.log('Periodic connection check successful');
 							})
 							.catch((error) => {
 								console.error('Periodic connection check failed:', error);
@@ -353,7 +353,7 @@
 					console.error('Error during periodic check:', error);
 					this.handleExtensionInvalidated();
 				} finally {
-					console.log('Scheduling next check...');
+					// console.log('Scheduling next check...');
 					setTimeout(periodicCheck, 5000);
 				}
 			};
@@ -405,7 +405,7 @@
 
 	// Move the captureHtmxEvent and related functions inside the IIFE
 	function captureHtmxEvent(event) {
-		console.log('htmx event captured:', event.type, event);
+		// console.log('htmx event captured:', event.type, event);
 
 		// Skip connection tests and other non-essential events
 		if (event.type === 'TEST' || event.type === 'CONNECTION_TEST' || event.detail?.type === 'CONNECTION_TEST') {
@@ -544,7 +544,7 @@
 					if (chrome.runtime.lastError) {
 						console.error('Error sending message:', chrome.runtime.lastError);
 					} else {
-						console.log('Message sent successfully:', response);
+						// console.log('Message sent successfully:', response);
 					}
 				}
 			);
@@ -623,5 +623,3 @@
 		console.warn('Not running in a Chrome extension environment. htmx event capture disabled.');
 	}
 })();
-
-console.log('htmx-debugger content script loaded');

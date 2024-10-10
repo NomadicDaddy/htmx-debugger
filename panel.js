@@ -417,10 +417,10 @@ function captureElementSnapshot(element) {
 	return {
 		outerHTML: element.outerHTML,
 		innerHTML: element.innerHTML,
-		attributes: Array.from(element.attributes).map(attr => ({
+		attributes: Array.from(element.attributes).map((attr) => ({
 			name: attr.name,
-			value: attr.value
-		}))
+			value: attr.value,
+		})),
 	};
 }
 

@@ -3,3 +3,4 @@
 **/releases
 **/.vscode
 .build.ps1
+package-lock.json

@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "htmx-debugger",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
 	"permissions": ["alarms"],
 	"optional_host_permissions": ["<all_urls>"],
