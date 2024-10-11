@@ -1,4 +1,4 @@
-# htmx-debugger v1.0.4 - 2024-10-03
+# htmx-debugger v1.0.5 - 2024-10-11
 
 ## Overview
 
@@ -110,9 +110,7 @@ htmx-debugger is committed to protecting user privacy and does not collect or us
 
 ### Permissions and Their Justifications
 
-1. **activeTab**: This permission is required to access the current tab's content and inject the necessary scripts for debugging htmx events. It allows the extension to interact with the webpage being debugged without requiring broader permissions.
-
-2. **alarms**: The alarms permission is used to schedule periodic connection checks, ensuring the debugger maintains a stable connection to the webpage. This improves the reliability of the debugging process.
+1. **alarms**: The alarms permission is used to schedule periodic connection checks, ensuring the debugger maintains a stable connection to the webpage. This improves the reliability of the debugging process.
 
 ### Single Purpose Description
 
@@ -120,7 +118,7 @@ The single purpose of htmx-debugger is to provide a comprehensive debugging tool
 
 ### Data Usage Compliance
 
-htmx-debugger complies with the Chrome Web Store Developer Program Policies regarding data usage. The extension:
+htmx-debugger complies with both the Chrome Web Store Developer Program Policies and the Firefox Add-Ons policies regarding data usage. The extension:
 
 -   Does not collect any personal user data
 -   Does not transmit any captured debugging information outside of the user's browser
@@ -131,6 +129,7 @@ By using htmx-debugger, users can be assured that their privacy is respected and
 
 ## Version History
 
+-   v1.0.5 (2024-10-11): Before/after request/response event capture, removed activeTab permission, reduced console log output
 -   v1.0.4 (2024-10-03): Fixed excessive permissions per Google review
 -   v1.0.3 (2024-10-02): Minor update and new Firefox release
     -   Fixed sanitization issue recommended by Firefox
