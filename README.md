@@ -1,4 +1,4 @@
-# htmx-debugger v1.0.5 - 2024-10-11
+# htmx-debugger v1.0.6 - 2024-10-22
 
 ## Overview
 
@@ -129,13 +129,11 @@ By using htmx-debugger, users can be assured that their privacy is respected and
 
 ## Version History
 
+-   v1.0.6 (2024-10-22): Added HX attributes to target element details, added snapshot information, added error handling and reporting, further reduced console log output
 -   v1.0.5 (2024-10-11): Before/after request/response event capture, removed activeTab permission, reduced console log output
 -   v1.0.4 (2024-10-03): Fixed excessive permissions per Google review
--   v1.0.3 (2024-10-02): Minor update and new Firefox release
-    -   Fixed sanitization issue recommended by Firefox
--   v1.0.0 (2024-09-30): Initial release
-    -   core features implemented
-    -   Chrome Web Store release
+-   v1.0.3 (2024-10-02): Minor update and new Firefox release, fixed sanitization issue recommended by Firefox
+-   v1.0.0 (2024-09-30): Initial release, core features implemented, Chrome Web Store release
 
 For a detailed changelog, please check the repository's commit log.
 

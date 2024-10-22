@@ -105,7 +105,7 @@
 	--tw-contain-layout: ;
 	--tw-contain-paint: ;
 	--tw-contain-style: ;
-} /*! tailwindcss v3.4.13 | MIT License | https://tailwindcss.com*/
+} /*! tailwindcss v3.4.14 | MIT License | https://tailwindcss.com*/
 *,
 :after,
 :before {
@@ -319,7 +319,7 @@ video {
 	max-width: 100%;
 	height: auto;
 }
-[hidden] {
+[hidden]:where(:not([hidden='until-found'])) {
 	display: none;
 }
 :root {

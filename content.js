@@ -141,8 +141,8 @@
 					detail: event.detail ? JSON.parse(JSON.stringify(event.detail)) : null,
 				};
 
-				console.log('htmx Event captured:', eventInfo);
-				console.log('HX Attributes:', eventInfo.target.hxAttributes);
+				// console.log('htmx Event captured:', eventInfo);
+				// console.log('HX Attributes:', eventInfo.target.hxAttributes);
 
 				if (event.type.startsWith('htmx:xhr:') && event.detail && event.detail.xhr) {
 					eventInfo.xhr = this.getXhrInfo(event.detail.xhr);
