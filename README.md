@@ -8,21 +8,21 @@ htmx-debugger is a powerful browser extension (compatible with Chrome and Firefo
 
 ## Features
 
--   Real-time capture and display of htmx events
--   Intelligent grouping of related events for easier analysis
--   Powerful search functionality to filter events
--   One-click clear button to reset the debugger view
--   Flexible event filtering (All, Request, Response)
--   Collapsible event details for a cleaner interface
--   Detailed timing information for request-response cycles
--   Live connection status indicator
--   Automatic periodic connection checks for improved stability
--   Robust error handling and reporting
+- Real-time capture and display of htmx events
+- Intelligent grouping of related events for easier analysis
+- Powerful search functionality to filter events
+- One-click clear button to reset the debugger view
+- Flexible event filtering (All, Request, Response)
+- Collapsible event details for a cleaner interface
+- Detailed timing information for request-response cycles
+- Live connection status indicator
+- Automatic periodic connection checks for improved stability
+- Robust error handling and reporting
 
 ## Future
 
--   Export functionality to save captured events as a JSON file
--   Import capability to load and analyze events from a JSON file
+- Export functionality to save captured events as a JSON file
+- Import capability to load and analyze events from a JSON file
 
 ## Installation
 
@@ -67,11 +67,11 @@ htmx-debugger is a powerful browser extension (compatible with Chrome and Firefo
 
 The debugger automatically captures htmx events as they occur on the page. Each event is displayed with the following information:
 
--   Event type
--   Timestamp
--   Target element details
--   Event-specific details
--   XHR information (for relevant events)
+- Event type
+- Timestamp
+- Target element details
+- Event-specific details
+- XHR information (for relevant events)
 
 ### Using the Debugger Features
 
@@ -84,23 +84,23 @@ The debugger automatically captures htmx events as they occur on the page. Each 
 
 ## Troubleshooting
 
--   If you don't see any events in the debugger, ensure that the webpage you're debugging is actually using htmx.
--   If the htmx tab doesn't appear in DevTools, try reloading the page or reopening DevTools.
--   Check the browser console for any error messages related to the extension.
--   If the connection status shows "Disconnected", try reloading the page.
--   If problems persist, try disabling and re-enabling the extension, reloading the webpage, or restarting Chrome.
+- If you don't see any events in the debugger, ensure that the webpage you're debugging is actually using htmx.
+- If the htmx tab doesn't appear in DevTools, try reloading the page or reopening DevTools.
+- Check the browser console for any error messages related to the extension.
+- If the connection status shows "Disconnected", try reloading the page.
+- If problems persist, try disabling and re-enabling the extension, reloading the webpage, or restarting Chrome.
 
 ## Development
 
 ### Key File Structure
 
--   `background.js`: Background script for message handling and service worker setup
--   `content.js`: Content script for capturing htmx events and communication with background script
--   `devtools.html`: DevTools panel HTML
--   `devtools.js`: DevTools panel functionality
--   `manifest.json`: Extension configuration, permission or configuration changes
--   `panel.html`: Panel HTML for displaying captured events and debugger controls
--   `panel.js`: Panel functionality for handling event display and debugger features
+- `background.js`: Background script for message handling and service worker setup
+- `content.js`: Content script for capturing htmx events and communication with background script
+- `devtools.html`: DevTools panel HTML
+- `devtools.js`: DevTools panel functionality
+- `manifest.json`: Extension configuration, permission or configuration changes
+- `panel.html`: Panel HTML for displaying captured events and debugger controls
+- `panel.js`: Panel functionality for handling event display and debugger features
 
 There are many other build/development-related files in addtion to those listed above. If you're contributing or modifying for your own purposes you should recgonize these.
 
@@ -120,20 +120,20 @@ The single purpose of htmx-debugger is to provide a comprehensive debugging tool
 
 htmx-debugger complies with both the Chrome Web Store Developer Program Policies and the Firefox Add-Ons policies regarding data usage. The extension:
 
--   Does not collect any personal user data
--   Does not transmit any captured debugging information outside of the user's browser
--   Only processes information necessary for its core debugging functionality
--   Stores data locally and solely for the purpose of improving the user's debugging experience
+- Does not collect any personal user data
+- Does not transmit any captured debugging information outside of the user's browser
+- Only processes information necessary for its core debugging functionality
+- Stores data locally and solely for the purpose of improving the user's debugging experience
 
 By using htmx-debugger, users can be assured that their privacy is respected and that the extension operates within the bounds of its stated purpose as a development tool for htmx applications.
 
 ## Version History
 
--   v1.0.6 (2024-10-22): Added HX attributes to target element details, added snapshot information, added error handling and reporting, further reduced console log output
--   v1.0.5 (2024-10-11): Before/after request/response event capture, removed activeTab permission, reduced console log output
--   v1.0.4 (2024-10-03): Fixed excessive permissions per Google review
--   v1.0.3 (2024-10-02): Minor update and new Firefox release, fixed sanitization issue recommended by Firefox
--   v1.0.0 (2024-09-30): Initial release, core features implemented, Chrome Web Store release
+- v1.0.6 (2024-10-22): Added HX attributes to target element details, added snapshot information, added error handling and reporting, further reduced console log output
+- v1.0.5 (2024-10-11): Before/after request/response event capture, removed activeTab permission, reduced console log output
+- v1.0.4 (2024-10-03): Fixed excessive permissions per Google review
+- v1.0.3 (2024-10-02): Minor update and new Firefox release, fixed sanitization issue recommended by Firefox
+- v1.0.0 (2024-09-30): Initial release, core features implemented, Chrome Web Store release
 
 For a detailed changelog, please check the repository's commit log.
 

@@ -1,6 +1,9 @@
 {
 	"name": "htmx-debugger",
 	"version": "1.0.6",
+	"engines": {
+		"node": ">=24.0.0 <25.0.0"
+	},
 	"description": "htmx-debugger - a debugging tool for htmx applications",
 	"author": "Phillip Beazley <phillip@beazley.org>",
 	"license": "MIT",
@@ -17,15 +20,15 @@
 		"build": "pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass \"./.build.ps1\""
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.13.0",
-		"eslint": "^9.13.0",
-		"globals": "^15.11.0",
-		"prettier": "^3.3.3",
-		"prettier-plugin-tailwindcss": "^0.6.8",
-		"tailwindcss": "^3.4.14"
+		"@eslint/js": "^9.38.0",
+		"eslint": "^9.38.0",
+		"globals": "^16.4.0",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.7.1",
+		"tailwindcss": "^4.1.15"
 	},
 	"peerDependencies": {
-		"htmx.org": "^2.0.3"
+		"htmx.org": "^2.0.7"
 	},
 	"repository": {
 		"type": "git",

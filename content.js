@@ -1,5 +1,6 @@
 /* eslint-env browser */
 (function () {
+	/* global Element, XMLHttpRequest, Event */
 	const htmxDebugger = {
 		isConnected: false,
 		eventCounter: 0,
@@ -138,7 +139,7 @@
 					type: event.type,
 					timestamp: new Date().toISOString(),
 					target: this.getElementInfo(event.target),
-					detail: event.detail ? JSON.parse(JSON.stringify(event.detail)) : null,
+					detail: this.sanitizeDetail(event.detail),
 				};
 
 				// console.log('htmx Event captured:', eventInfo);
@@ -156,6 +157,95 @@
 			}
 		},
 
+		sanitizeDetail: function (input, seen = new WeakSet()) {
+			if (input === null || input === undefined) {
+				return null;
+			}
+
+			const inputType = typeof input;
+			if (inputType === 'string' || inputType === 'number' || inputType === 'boolean') {
+				return input;
+			}
+			if (input instanceof Date) {
+				return input.toISOString();
+			}
+			if (inputType === 'bigint') {
+				return input.toString();
+			}
+			if (inputType === 'symbol') {
+				return input.toString();
+			}
+
+			if (inputType === 'function') {
+				return undefined;
+			}
+
+			if (input && (inputType === 'object' || inputType === 'function')) {
+				if (seen.has(input)) {
+					return '[Circular]';
+				}
+				seen.add(input);
+			}
+
+			if (typeof Element !== 'undefined' && input instanceof Element) {
+				return this.getElementInfo(input);
+			}
+
+			if (typeof XMLHttpRequest !== 'undefined' && input instanceof XMLHttpRequest) {
+				return this.getXhrInfo(input);
+			}
+
+			if (typeof Event !== 'undefined' && input instanceof Event) {
+				return {
+					type: input.type,
+					timestamp: input.timeStamp,
+					target: this.getElementInfo(input.target),
+				};
+			}
+
+			if (input && input.constructor && input.constructor.name === 'ValidityState') {
+				const validityProps = [
+					'badInput',
+					'customError',
+					'patternMismatch',
+					'rangeOverflow',
+					'rangeUnderflow',
+					'stepMismatch',
+					'tooLong',
+					'tooShort',
+					'typeMismatch',
+					'valid',
+					'valueMissing',
+				];
+				return validityProps.reduce((acc, prop) => {
+					if (prop in input) {
+						acc[prop] = input[prop];
+					}
+					return acc;
+				}, {});
+			}
+
+			if (Array.isArray(input)) {
+				return input
+					.map((item) => this.sanitizeDetail(item, seen))
+					.filter((item) => item !== undefined);
+			}
+
+			const proto = Object.getPrototypeOf(input);
+			if (proto === Object.prototype || proto === null) {
+				const output = {};
+				Object.keys(input).forEach((key) => {
+					const value = this.sanitizeDetail(input[key], seen);
+					if (value !== undefined) {
+						output[key] = value;
+					}
+				});
+				return output;
+			}
+
+			return input.toString ? input.toString() : Object.prototype.toString.call(input);
+		},
+
 		sendMessage: function (data) {
 			if (!this.isConnected) {
 				console.warn('Not connected to background script. Attempting to reconnect...');
@@ -170,7 +260,7 @@
 						type: 'HTMX_EVENT',
 						data: data,
 					},
-					(response) => {
+					() => {
 						if (chrome.runtime.lastError) {
 							console.error('Error sending message:', chrome.runtime.lastError);
 							this.handleError(new Error(chrome.runtime.lastError.message));
@@ -191,7 +281,10 @@
 		},
 
 		setupHtmxLogger: function () {
-			if (window.htmx) {
+			if (window.htmx && typeof window.htmx.process === 'function') {
+				if (window.htmx.process.__htmxDebuggerWrapped) {
+					return;
+				}
 				const originalProcess = window.htmx.process;
 				let processingCounter = 0;
 				const maxProcessingDepth = 100; // Prevent potential infinite loops
@@ -217,6 +310,7 @@
 						processingCounter--;
 					}
 				};
+				window.htmx.process.__htmxDebuggerWrapped = true;
 			} else {
 				// console.warn('htmx not found on the page - some debugging features may not work.');
 			}
@@ -305,12 +399,11 @@
 									type: 'CONNECTION_TEST',
 									data: { message: 'Content script connection check' },
 								},
-								(response) => {
+								() => {
 									if (chrome.runtime.lastError) {
 										console.warn('Connection check failed, retrying...', chrome.runtime.lastError);
 										setTimeout(checkConnection, 1000);
 									} else {
-										// console.log('Connection verified:', response);
 										this.isConnected = true;
 										this.reconnectAttempts = 0;
 										resolve();
@@ -364,21 +457,55 @@
 
 	// At the top of the IIFE, after the htmxDebugger object definition
 	const htmxEvents = [
+		'htmx:abort',
+		'htmx:afterOnLoad',
+		'htmx:afterProcessNode',
 		'htmx:afterRequest',
+		'htmx:afterSettle',
 		'htmx:afterSwap',
+		'htmx:beforeCleanupElement',
+		'htmx:beforeHistorySave',
+		'htmx:beforeHistoryUpdate',
+		'htmx:beforeOnLoad',
+		'htmx:beforeProcessNode',
 		'htmx:beforeRequest',
 		'htmx:beforeSend',
 		'htmx:beforeSwap',
+		'htmx:beforeTransition',
 		'htmx:configRequest',
+		'htmx:confirm',
 		'htmx:historyCacheError',
+		'htmx:historyCacheHit',
+		'htmx:historyCacheMiss',
+		'htmx:historyCacheMissError',
+		'htmx:historyCacheMissLoad',
+		'htmx:historyCacheMissLoadError',
+		'htmx:historyRestore',
 		'htmx:load',
+		'htmx:noSSESourceError',
+		'htmx:oobAfterSwap',
+		'htmx:oobBeforeSwap',
+		'htmx:oobErrorNoTarget',
+		'htmx:onLoadError',
+		'htmx:prompt',
+		'htmx:pushedIntoHistory',
+		'htmx:replacedInHistory',
 		'htmx:responseError',
+		'htmx:sendAbort',
+		'htmx:sendError',
+		'htmx:sseError',
+		'htmx:swapError',
+		'htmx:targetError',
+		'htmx:timeout',
+		'htmx:trigger',
+		'htmx:validateUrl',
+		'htmx:validation:failed',
+		'htmx:validation:halted',
+		'htmx:validation:validate',
+		'htmx:xhr:abort',
 		'htmx:xhr:loadend',
 		'htmx:xhr:loadstart',
 		'htmx:xhr:progress',
-		'htmx:onLoadError',
-		'htmx:targetError',
-		'htmx:timeout',
 	];
 
 	function initializeDebugger() {
@@ -540,11 +667,9 @@
 					type: 'HTMX_EVENT',
 					data: eventDetails,
 				},
-				(response) => {
+				() => {
 					if (chrome.runtime.lastError) {
 						console.error('Error sending message:', chrome.runtime.lastError);
-					} else {
-						// console.log('Message sent successfully:', response);
 					}
 				}
 			);
