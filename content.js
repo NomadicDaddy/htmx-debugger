@@ -1,4 +1,3 @@
-/* eslint-env browser */
 (function () {
 	/* global Element, XMLHttpRequest, Event */
 	const htmxDebugger = {
@@ -115,6 +114,20 @@
 			}
 		},
 
+		parseHeaders: function (headerStr) {
+			const headers = {};
+			if (!headerStr) {
+				return headers;
+			}
+			headerStr.split('\r\n').forEach((headerPair) => {
+				const index = headerPair.indexOf(': ');
+				if (index > 0) {
+					headers[headerPair.substring(0, index)] = headerPair.substring(index + 2);
+				}
+			});
+			return headers;
+		},
+
 		logEvent: function (event) {
 			if (this.isCircuitBroken) {
 				console.warn('Circuit breaker active. Skipping event logging.');
@@ -147,6 +160,13 @@
 
 				if (event.type.startsWith('htmx:xhr:') && event.detail && event.detail.xhr) {
 					eventInfo.xhr = this.getXhrInfo(event.detail.xhr);
+				}
+
+				if (event.detail && event.detail.xhr && typeof event.detail.xhr.getAllResponseHeaders === 'function') {
+					const rawHeaders = event.detail.xhr.getAllResponseHeaders();
+					if (rawHeaders) {
+						eventInfo.responseHeaders = this.parseHeaders(rawHeaders);
+					}
 				}
 
 				// console.log('htmx Event:', eventInfo);
@@ -526,223 +546,5 @@
 		document.addEventListener('DOMContentLoaded', initializeDebugger);
 	} else {
 		initializeDebugger();
-	}
-
-	// Move the captureHtmxEvent and related functions inside the IIFE
-	function captureHtmxEvent(event) {
-		// console.log('htmx event captured:', event.type, event);
-
-		// Skip connection tests and other non-essential events
-		if (event.type === 'TEST' || event.type === 'CONNECTION_TEST' || event.detail?.type === 'CONNECTION_TEST') {
-			return;
-		}
-
-		let headers = {
-			request: {},
-			response: {},
-		};
-
-		let eventDetails = {
-			type: event.type,
-			detail: {},
-			headers: headers,
-		};
-
-		if (event.detail) {
-			switch (event.type) {
-				case 'htmx:afterOnLoad':
-				case 'htmx:afterRequest':
-				case 'htmx:afterSettle':
-				case 'htmx:afterSwap':
-				case 'htmx:beforeOnLoad':
-				case 'htmx:beforeRequest':
-				case 'htmx:beforeSwap':
-				case 'htmx:beforeSend':
-				case 'htmx:configRequest':
-				case 'htmx:historyCacheError':
-				case 'htmx:beforeHistoryUpdate':
-				case 'htmx:onLoadError':
-				case 'htmx:responseError':
-				case 'htmx:sendError':
-				case 'htmx:swapError':
-				case 'htmx:timeout':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-						xhr: event.detail.xhr ? getXhrInfo(event.detail.xhr) : null,
-						target: getElementInfo(event.detail.target),
-						requestConfig: event.detail.requestConfig,
-					};
-					break;
-				case 'htmx:afterProcessNode':
-				case 'htmx:beforeProcessNode':
-				case 'htmx:load':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-					};
-					break;
-				case 'htmx:beforeCleanupElement':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-					};
-					break;
-				case 'htmx:confirm':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-						target: getElementInfo(event.detail.target),
-						triggeringEvent: event.detail.triggeringEvent,
-						question: event.detail.question,
-					};
-					break;
-				case 'htmx:historyCacheMiss':
-				case 'htmx:historyCacheMissError':
-				case 'htmx:historyCacheMissLoad':
-					eventDetails.detail = {
-						xhr: event.detail.xhr ? getXhrInfo(event.detail.xhr) : null,
-						path: event.detail.path,
-					};
-					break;
-				case 'htmx:historyRestore':
-				case 'htmx:beforeHistorySave':
-				case 'htmx:pushedIntoHistory':
-				case 'htmx:replacedInHistory':
-					eventDetails.detail = {
-						path: event.detail.path,
-					};
-					break;
-				case 'htmx:sseError':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-						error: event.detail.error,
-						source: event.detail.source,
-					};
-					break;
-				case 'htmx:targetError':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-						target: event.detail.target,
-					};
-					break;
-				case 'htmx:validation:validate':
-				case 'htmx:validation:failed':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-						message: event.detail.message,
-						validity: event.detail.validity,
-					};
-					break;
-				case 'htmx:validation:halted':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-						errors: event.detail.errors,
-					};
-					break;
-				case 'htmx:xhr:abort':
-				case 'htmx:xhr:loadstart':
-				case 'htmx:xhr:loadend':
-				case 'htmx:xhr:progress':
-					eventDetails.detail = {
-						elt: getElementInfo(event.detail.elt),
-					};
-					break;
-				default:
-					eventDetails.detail = event.detail;
-					break;
-			}
-
-			if (event.detail.xhr) {
-				if (event.detail.xhr.requestHeaders) {
-					headers.request = event.detail.xhr.requestHeaders;
-				}
-				if (event.detail.xhr.getAllResponseHeaders) {
-					headers.response = parseHeaders(event.detail.xhr.getAllResponseHeaders());
-				}
-			}
-		}
-
-		if (chrome.runtime && chrome.runtime.sendMessage) {
-			chrome.runtime.sendMessage(
-				{
-					type: 'HTMX_EVENT',
-					data: eventDetails,
-				},
-				() => {
-					if (chrome.runtime.lastError) {
-						console.error('Error sending message:', chrome.runtime.lastError);
-					}
-				}
-			);
-		} else {
-			console.warn('Not running in a Chrome extension environment. htmx event capture disabled.');
-		}
-	}
-
-	function parseHeaders(headerStr) {
-		var headers = {};
-		if (!headerStr) {
-			return headers;
-		}
-		var headerPairs = headerStr.split('\u000d\u000a');
-		for (var i = 0; i < headerPairs.length; i++) {
-			var headerPair = headerPairs[i];
-			var index = headerPair.indexOf('\u003a\u0020');
-			if (index > 0) {
-				var key = headerPair.substring(0, index);
-				var val = headerPair.substring(index + 2);
-				headers[key] = val;
-			}
-		}
-		return headers;
-	}
-
-	function getElementInfo(element) {
-		if (!element) return null;
-		try {
-			const attributes = Array.from(element.attributes || []).map((attr) => ({
-				name: attr.name,
-				value: attr.value,
-			}));
-
-			const hxAttributes = attributes.filter((attr) => attr.name.startsWith('hx-'));
-
-			return {
-				id: element.id || '',
-				tagName: element.tagName || '',
-				className: element.className || '',
-				attributes: attributes,
-				hxAttributes: hxAttributes.length > 0 ? hxAttributes : undefined,
-			};
-		} catch (error) {
-			console.error('Error getting element info:', error);
-			return { error: 'Failed to get element info' };
-		}
-	}
-
-	function getXhrInfo(xhr) {
-		if (!xhr) return null;
-		try {
-			return {
-				url: xhr.url || 'N/A',
-				method: xhr.method || 'N/A',
-				status: xhr.status || 'N/A',
-				statusText: xhr.statusText || 'N/A',
-			};
-		} catch (error) {
-			console.error('Error getting XHR info:', error);
-			return { error: 'Failed to get XHR info' };
-		}
-	}
-
-	// Set up event listeners only if running in a Chrome extension environment
-	if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
-		console.log('htmx-debugger content script loaded');
-
-		// Listen for all htmx events
-		htmxEvents.forEach((eventType) => {
-			document.body.addEventListener(eventType, captureHtmxEvent, true);
-		});
-
-		console.log('htmx event listeners set up');
-	} else {
-		console.warn('Not running in a Chrome extension environment. htmx event capture disabled.');
 	}
 })();

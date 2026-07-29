@@ -1,4 +1,3 @@
 - create version for Safari
 - implement export to download the captured events as a JSON file
 - implement import to load events from a JSON file for analysis
-- migrate `/* eslint-env */` comments in `background.js` and `content.js` to `/* global */` (or define globals in eslint config) — becomes an error in eslint v10

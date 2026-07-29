@@ -1,5 +1,3 @@
-/* eslint-env worker */
-
 let connections = {};
 let messageQueue = [];
 let isProcessingQueue = false;
