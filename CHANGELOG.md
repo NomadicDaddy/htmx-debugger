@@ -7,6 +7,20 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-07-29
+
+### Fixed
+
+- `bun run build` runs to completion again after the Tailwind v4 upgrade. The CSS build
+  step pointed at the standalone Tailwind CLI, which no longer ships in v4; it now uses
+  the dedicated `@tailwindcss/cli` package.
+- The distribution build is reproducible from a clean checkout and can be re-run at the
+  same version. It creates the `dist` directory before copying files, and rebuilding
+  overwrites the existing release archives instead of erroring.
+- The extension version shown in the browser now matches the package version. It had
+  stayed at 1.0.6 since the 1.1.0 release because the manifest files were not bumped
+  alongside `package.json`.
+
 ## [1.1.0] - 2026-07-29
 
 ### Added
