@@ -226,9 +226,7 @@
 			}
 
 			if (Array.isArray(input)) {
-				return input
-					.map((item) => this.sanitizeDetail(item, seen))
-					.filter((item) => item !== undefined);
+				return input.map((item) => this.sanitizeDetail(item, seen)).filter((item) => item !== undefined);
 			}
 
 			const proto = Object.getPrototypeOf(input);

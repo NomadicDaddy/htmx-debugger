@@ -1,16 +1,13 @@
 $v = (Get-Content -Path './package.json' -Raw | ConvertFrom-Json)
 "# building current version: $($v.version)"
 
-'# development npm packages'
-npm install -D eslint globals @eslint/js tailwindcss prettier prettier-plugin-tailwindcss
-
-'# update packages'
-npm update
+'# install dependencies'
+bun install --frozen-lockfile
 
 '# build steps'
-npm run lint
-npm run css
-npm run format
+bun run lint
+bun run css
+bun run format
 
 '# delete previous distribution files'
 Remove-Item -Path './dist/*' -Force

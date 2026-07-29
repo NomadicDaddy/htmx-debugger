@@ -1,231 +1,299 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta
+			name="description"
+			content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
 
-    htmx is small (~14k min.gz’d), dependency-free, extendable, IE11 compatible & has reduced code base sizes by 67% when compared with react">
-    
-  <title>&lt;/&gt; htmx ~ Events</title>
-     <link rel="canonical" href="https://htmx.org/events/"> 
-    
-    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="/atom.xml">
-    <link rel="stylesheet" href="/css/site.css">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <script src="/js/htmx.js"></script>
-    <script src="/js/class-tools.js"></script>
-    <script src="/js/preload.js"></script>
+    htmx is small (~14k min.gz’d), dependency-free, extendable, IE11 compatible & has reduced code base sizes by 67% when compared with react" />
 
-    <script src="/js/_hyperscript.js"></script>
-    <meta name="generator" content="Zola v.TODO">
-</head>
-<body hx-ext="class-tools, preload">
+		<title>&lt;/&gt; htmx ~ Events</title>
+		<link rel="canonical" href="https://htmx.org/events/" />
 
-<div class="top-nav">
-    <div class="c">
-        <div class="menu">
-            <div class="logo-wrapper">
-                <a href="/" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
-                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
-                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
-                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
-                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
-                </svg>
-            </div>
-            
-            <div id="nav" class="navigation" hx-boost="true">
-            
-                <div class="navigation-items" preload="mouseover">
-                    <div><a href="/docs/">docs</a></div>
-                    <div><a href="/reference/">reference</a></div>
-                    <div><a href="/examples/">examples</a></div>
-                    <div><a href="/talk/">talk</a></div>
-                    <div><a href="/essays/">essays</a></div>
-                    <div hx-disable>
-                        <form action="https://google.com/search" role="search" aria-label="Sitewide">
-                            <input type="hidden" name="q" value="+[inurl:https://htmx.org]">
-                            <label>
-                                <span style="display:none;">Search</span>
-                                <input type="text" name="q" placeholder="🔍️" class="search-box">
-                            </label>
-                        </form>
-                    </div>
-                    <div>
-                        <div class="github-stars" hx-preserve="true" id="github-stars">
-                            <a class="github-button" href="https://github.com/bigskysoftware/htmx" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-show-count="true" aria-label="Star bigskysoftware/htmx on GitHub">star</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+		<link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="/atom.xml" />
+		<link rel="stylesheet" href="/css/site.css" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<script src="/js/htmx.js"></script>
+		<script src="/js/class-tools.js"></script>
+		<script src="/js/preload.js"></script>
 
+		<script src="/js/_hyperscript.js"></script>
+		<meta name="generator" content="Zola v.TODO" />
+	</head>
+	<body hx-ext="class-tools, preload">
+		<div class="top-nav">
+			<div class="c">
+				<div class="menu">
+					<div class="logo-wrapper">
+						<a href="/" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+						<svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom: -5px">
+							<rect width="100" height="20" style="fill: rgb(52, 101, 164)" rx="10"></rect>
+							<rect y="30" width="100" height="20" style="fill: rgb(52, 101, 164)" rx="10"></rect>
+							<rect y="60" width="100" height="20" style="fill: rgb(52, 101, 164)" rx="10"></rect>
+						</svg>
+					</div>
 
-    
+					<div id="nav" class="navigation" hx-boost="true">
+						<div class="navigation-items" preload="mouseover">
+							<div><a href="/docs/">docs</a></div>
+							<div><a href="/reference/">reference</a></div>
+							<div><a href="/examples/">examples</a></div>
+							<div><a href="/talk/">talk</a></div>
+							<div><a href="/essays/">essays</a></div>
+							<div hx-disable>
+								<form action="https://google.com/search" role="search" aria-label="Sitewide">
+									<input type="hidden" name="q" value="+[inurl:https://htmx.org]" />
+									<label>
+										<span style="display: none">Search</span>
+										<input type="text" name="q" placeholder="🔍️" class="search-box" />
+									</label>
+								</form>
+							</div>
+							<div>
+								<div class="github-stars" hx-preserve="true" id="github-stars">
+									<a
+										class="github-button"
+										href="https://github.com/bigskysoftware/htmx"
+										data-color-scheme="no-preference: light; light: light; dark: dark;"
+										data-icon="octicon-star"
+										data-show-count="true"
+										aria-label="Star bigskysoftware/htmx on GitHub"
+										>star</a
+									>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-
-<div class="c content ">
-    
-  <h1>Events</h1>
-  <p>Htmx provides an extensive events system that can be used to modify and enhance behavior.  Events
-are listed below.</p>
-<h3 id="htmx:abort"><a class="zola-anchor" href="#htmx:abort" aria-label="Anchor link for: htmx:abort">Event - <code>htmx:abort</code></a></h3>
-<p>This event is different than other events: htmx does not <em>trigger</em> it, but rather <em>listens</em> for it.</p>
-<p>If you send an <code>htmx:abort</code> event to an element making a request, it will abort the request:</p>
-<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&quot;request-button&quot; </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&quot;/example&quot;</span><span>&gt;Issue Request&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+		<div class="c content">
+			<h1>Events</h1>
+			<p>Htmx provides an extensive events system that can be used to modify and enhance behavior. Events are listed below.</p>
+			<h3 id="htmx:abort">
+				<a class="zola-anchor" href="#htmx:abort" aria-label="Anchor link for: htmx:abort">Event - <code>htmx:abort</code></a>
+			</h3>
+			<p>This event is different than other events: htmx does not <em>trigger</em> it, but rather <em>listens</em> for it.</p>
+			<p>If you send an <code>htmx:abort</code> event to an element making a request, it will abort the request:</p>
+			<pre
+				data-lang="html"
+				style="background-color: #1f2329; color: #abb2bf"
+				class="language-html"><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&quot;request-button&quot; </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&quot;/example&quot;</span><span>&gt;Issue Request&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
 </span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">onclick</span><span>=</span><span style="color:#98c379;">&quot;</span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#e06c75;">trigger</span><span>(</span><span style="color:#98c379;">&#39;#request-button&#39;</span><span>, </span><span style="color:#98c379;">&#39;htmx:abort&#39;</span><span>)</span><span style="color:#98c379;">&quot;</span><span>&gt;Cancel Request&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
 </span></code></pre>
-<h3 id="htmx:afterOnLoad"><a class="zola-anchor" href="#htmx:afterOnLoad" aria-label="Anchor link for: htmx:afterOnLoad">Event - <code>htmx:afterOnLoad</code></a></h3>
-<p>This event is triggered after an AJAX <code>onload</code> has finished.  Note that this does not mean that the content
-has been swapped or settled yet, only that the request has finished.</p>
-<h5 id="details"><a class="zola-anchor" href="#details" aria-label="Anchor link for: details">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that dispatched the request or if the body no longer contains the element then the closest parent</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:afterProcessNode"><a class="zola-anchor" href="#htmx:afterProcessNode" aria-label="Anchor link for: htmx:afterProcessNode">Event - <code>htmx:afterProcessNode</code></a></h3>
-<p>This event is triggered after htmx has initialized a DOM node.  It can be useful for extensions to build additional features onto a node.</p>
-<h5 id="details-1"><a class="zola-anchor" href="#details-1" aria-label="Anchor link for: details-1">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element being initialized</li>
-</ul>
-<h3 id="htmx:afterRequest"><a class="zola-anchor" href="#htmx:afterRequest" aria-label="Anchor link for: htmx:afterRequest">Event - <code>htmx:afterRequest</code></a></h3>
-<p>This event is triggered after an AJAX request has finished either in the case of a successful request (although
-one that may have returned a remote error code such as a <code>404</code>) or in a network error situation.  This event
-can be paired with <a href="https://htmx.org/events/#htmx:beforeRequest"><code>htmx:beforeRequest</code></a> to wrap behavior around a request cycle.</p>
-<h5 id="details-2"><a class="zola-anchor" href="#details-2" aria-label="Anchor link for: details-2">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that dispatched the request or if the body no longer contains the element then the closest parent</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-<li><code>detail.successful</code> - true if the response has a 20x status code or is marked <code>detail.isError = false</code> in the
-<code>htmx:beforeSwap</code> event, else false</li>
-<li><code>detail.failed</code> - true if the response does not have a 20x status code or is marked <code>detail.isError = true</code> in the
-<code>htmx:beforeSwap</code> event, else false</li>
-</ul>
-<h3 id="htmx:afterSettle"><a class="zola-anchor" href="#htmx:afterSettle" aria-label="Anchor link for: htmx:afterSettle">Event - <code>htmx:afterSettle</code></a></h3>
-<p>This event is triggered after the DOM has <a href="https://htmx.org/docs/#request-operations">settled</a>.</p>
-<h5 id="details-3"><a class="zola-anchor" href="#details-3" aria-label="Anchor link for: details-3">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the updated element</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:afterSwap"><a class="zola-anchor" href="#htmx:afterSwap" aria-label="Anchor link for: htmx:afterSwap">Event - <code>htmx:afterSwap</code></a></h3>
-<p>This event is triggered after new content has been <a href="https://htmx.org/docs/#swapping">swapped into the DOM</a>.</p>
-<h5 id="details-4"><a class="zola-anchor" href="#details-4" aria-label="Anchor link for: details-4">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the swapped in element</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:beforeCleanupElement"><a class="zola-anchor" href="#htmx:beforeCleanupElement" aria-label="Anchor link for: htmx:beforeCleanupElement">Event - <code>htmx:beforeCleanupElement</code></a></h3>
-<p>This event is triggered before htmx <a href="https://htmx.org/attributes/hx-disable/">disables</a> an element or removes it from the DOM.</p>
-<h5 id="details-5"><a class="zola-anchor" href="#details-5" aria-label="Anchor link for: details-5">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element to be cleaned up</li>
-</ul>
-<h3 id="htmx:beforeOnLoad"><a class="zola-anchor" href="#htmx:beforeOnLoad" aria-label="Anchor link for: htmx:beforeOnLoad">Event - <code>htmx:beforeOnLoad</code></a></h3>
-<p>This event is triggered before any response processing occurs.  If you call <code>preventDefault()</code> on the event to cancel it, no swap will occur.</p>
-<h5 id="details-6"><a class="zola-anchor" href="#details-6" aria-label="Anchor link for: details-6">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that dispatched the request</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:beforeProcessNode"><a class="zola-anchor" href="#htmx:beforeProcessNode" aria-label="Anchor link for: htmx:beforeProcessNode">Event - <code>htmx:beforeProcessNode</code></a></h3>
-<p>This event is triggered before htmx initializes a DOM node and has processed all of its <code>hx-</code> attributes.  This gives extensions and other external code the ability to modify the contents of a DOM node before it is processed.</p>
-<h5 id="details-7"><a class="zola-anchor" href="#details-7" aria-label="Anchor link for: details-7">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element being initialized</li>
-</ul>
-<h3 id="htmx:beforeRequest"><a class="zola-anchor" href="#htmx:beforeRequest" aria-label="Anchor link for: htmx:beforeRequest">Event - <code>htmx:beforeRequest</code></a></h3>
-<p>This event is triggered before an AJAX request is issued.  If you call <code>preventDefault()</code> on the event to cancel it, no request will occur.</p>
-<h5 id="details-8"><a class="zola-anchor" href="#details-8" aria-label="Anchor link for: details-8">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that dispatched the request</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.boosted</code> - true if the request is via an element using boosting</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:beforeSend"><a class="zola-anchor" href="#htmx:beforeSend" aria-label="Anchor link for: htmx:beforeSend">Event - <code>htmx:beforeSend</code></a></h3>
-<p>This event is triggered right before a request is sent.  You may not cancel the request with this event.</p>
-<h5 id="details-9"><a class="zola-anchor" href="#details-9" aria-label="Anchor link for: details-9">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that dispatched the request</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:beforeSwap"><a class="zola-anchor" href="#htmx:beforeSwap" aria-label="Anchor link for: htmx:beforeSwap">Event - <code>htmx:beforeSwap</code></a></h3>
-<p>This event is triggered before any new content has been <a href="https://htmx.org/docs/#swapping">swapped into the DOM</a>.
-Most values on <code>detail</code> can be set to override subsequent behavior, other than where response headers take precedence.
-If you call <code>preventDefault()</code> on the event to cancel it, no swap will occur.</p>
-<p>You can modify the default swap behavior by modifying the <code>shouldSwap</code>, <code>selectOverride</code>, <code>swapOverride</code> and <code>target</code> properties of the event detail.
-See the documentation on <a href="https://htmx.org/docs/#modifying_swapping_behavior_with_events">configuring swapping</a> for more details.</p>
-<h5 id="details-10"><a class="zola-anchor" href="#details-10" aria-label="Anchor link for: details-10">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the target of the swap</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.boosted</code> - true if the request is via an element using boosting</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-<li><code>detail.requestConfig.elt</code> - the element that dispatched the request</li>
-<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>false</code> for non-200 response codes)</li>
-<li><code>detail.ignoreTitle</code> - if <code>true</code> any title tag in the response will be ignored</li>
-<li><code>detail.isError</code> - whether error events should be triggered and also determines the values of <code>detail.successful</code> and <code>detail.failed</code> in later events</li>
-<li><code>detail.serverResponse</code> - the server response as text to be used for the swap</li>
-<li><code>detail.selectOverride</code> - add this to use instead of an <a href="https://htmx.org/attributes/hx-select/"><code>hx-select</code></a> value</li>
-<li><code>detail.swapOverride</code> - add this to use instead of an <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a> value</li>
-<li><code>detail.target</code> - the target of the swap</li>
-</ul>
-<h3 id="htmx:beforeTransition"><a class="zola-anchor" href="#htmx:beforeTransition" aria-label="Anchor link for: htmx:beforeTransition">Event - <code>htmx:beforeTransition</code></a></h3>
-<p>This event is triggered before a <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transition</a>
-wrapped swap occurs.  If you call <code>preventDefault()</code> on the event to cancel it, the View Transition will not occur and the normal swapping logic will
-happen instead.</p>
-<h5 id="details-11"><a class="zola-anchor" href="#details-11" aria-label="Anchor link for: details-11">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that dispatched the request</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.boosted</code> - true if the request is via an element using boosting</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>false</code> for non-200 response codes)</li>
-<li><code>detail.target</code> - the target of the swap</li>
-</ul>
-<h3 id="htmx:configRequest"><a class="zola-anchor" href="#htmx:configRequest" aria-label="Anchor link for: htmx:configRequest">Event - <code>htmx:configRequest</code></a></h3>
-<p>This event is triggered after htmx has collected parameters for inclusion in the request.  It can be
-used to include or update the parameters that htmx will send:</p>
-<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:configRequest&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+			<h3 id="htmx:afterOnLoad">
+				<a class="zola-anchor" href="#htmx:afterOnLoad" aria-label="Anchor link for: htmx:afterOnLoad">Event - <code>htmx:afterOnLoad</code></a>
+			</h3>
+			<p>
+				This event is triggered after an AJAX <code>onload</code> has finished. Note that this does not mean that the content has been swapped or settled yet, only that the
+				request has finished.
+			</p>
+			<h5 id="details"><a class="zola-anchor" href="#details" aria-label="Anchor link for: details">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that dispatched the request or if the body no longer contains the element then the closest parent</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:afterProcessNode">
+				<a class="zola-anchor" href="#htmx:afterProcessNode" aria-label="Anchor link for: htmx:afterProcessNode">Event - <code>htmx:afterProcessNode</code></a>
+			</h3>
+			<p>This event is triggered after htmx has initialized a DOM node. It can be useful for extensions to build additional features onto a node.</p>
+			<h5 id="details-1"><a class="zola-anchor" href="#details-1" aria-label="Anchor link for: details-1">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element being initialized</li>
+			</ul>
+			<h3 id="htmx:afterRequest">
+				<a class="zola-anchor" href="#htmx:afterRequest" aria-label="Anchor link for: htmx:afterRequest">Event - <code>htmx:afterRequest</code></a>
+			</h3>
+			<p>
+				This event is triggered after an AJAX request has finished either in the case of a successful request (although one that may have returned a remote error code such
+				as a <code>404</code>) or in a network error situation. This event can be paired with
+				<a href="https://htmx.org/events/#htmx:beforeRequest"><code>htmx:beforeRequest</code></a> to wrap behavior around a request cycle.
+			</p>
+			<h5 id="details-2"><a class="zola-anchor" href="#details-2" aria-label="Anchor link for: details-2">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that dispatched the request or if the body no longer contains the element then the closest parent</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+				<li>
+					<code>detail.successful</code> - true if the response has a 20x status code or is marked <code>detail.isError = false</code> in the
+					<code>htmx:beforeSwap</code> event, else false
+				</li>
+				<li>
+					<code>detail.failed</code> - true if the response does not have a 20x status code or is marked <code>detail.isError = true</code> in the
+					<code>htmx:beforeSwap</code> event, else false
+				</li>
+			</ul>
+			<h3 id="htmx:afterSettle">
+				<a class="zola-anchor" href="#htmx:afterSettle" aria-label="Anchor link for: htmx:afterSettle">Event - <code>htmx:afterSettle</code></a>
+			</h3>
+			<p>This event is triggered after the DOM has <a href="https://htmx.org/docs/#request-operations">settled</a>.</p>
+			<h5 id="details-3"><a class="zola-anchor" href="#details-3" aria-label="Anchor link for: details-3">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the updated element</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:afterSwap">
+				<a class="zola-anchor" href="#htmx:afterSwap" aria-label="Anchor link for: htmx:afterSwap">Event - <code>htmx:afterSwap</code></a>
+			</h3>
+			<p>This event is triggered after new content has been <a href="https://htmx.org/docs/#swapping">swapped into the DOM</a>.</p>
+			<h5 id="details-4"><a class="zola-anchor" href="#details-4" aria-label="Anchor link for: details-4">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the swapped in element</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:beforeCleanupElement">
+				<a class="zola-anchor" href="#htmx:beforeCleanupElement" aria-label="Anchor link for: htmx:beforeCleanupElement">Event - <code>htmx:beforeCleanupElement</code></a>
+			</h3>
+			<p>This event is triggered before htmx <a href="https://htmx.org/attributes/hx-disable/">disables</a> an element or removes it from the DOM.</p>
+			<h5 id="details-5"><a class="zola-anchor" href="#details-5" aria-label="Anchor link for: details-5">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element to be cleaned up</li>
+			</ul>
+			<h3 id="htmx:beforeOnLoad">
+				<a class="zola-anchor" href="#htmx:beforeOnLoad" aria-label="Anchor link for: htmx:beforeOnLoad">Event - <code>htmx:beforeOnLoad</code></a>
+			</h3>
+			<p>This event is triggered before any response processing occurs. If you call <code>preventDefault()</code> on the event to cancel it, no swap will occur.</p>
+			<h5 id="details-6"><a class="zola-anchor" href="#details-6" aria-label="Anchor link for: details-6">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that dispatched the request</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:beforeProcessNode">
+				<a class="zola-anchor" href="#htmx:beforeProcessNode" aria-label="Anchor link for: htmx:beforeProcessNode">Event - <code>htmx:beforeProcessNode</code></a>
+			</h3>
+			<p>
+				This event is triggered before htmx initializes a DOM node and has processed all of its <code>hx-</code> attributes. This gives extensions and other external code
+				the ability to modify the contents of a DOM node before it is processed.
+			</p>
+			<h5 id="details-7"><a class="zola-anchor" href="#details-7" aria-label="Anchor link for: details-7">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element being initialized</li>
+			</ul>
+			<h3 id="htmx:beforeRequest">
+				<a class="zola-anchor" href="#htmx:beforeRequest" aria-label="Anchor link for: htmx:beforeRequest">Event - <code>htmx:beforeRequest</code></a>
+			</h3>
+			<p>This event is triggered before an AJAX request is issued. If you call <code>preventDefault()</code> on the event to cancel it, no request will occur.</p>
+			<h5 id="details-8"><a class="zola-anchor" href="#details-8" aria-label="Anchor link for: details-8">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that dispatched the request</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.boosted</code> - true if the request is via an element using boosting</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:beforeSend">
+				<a class="zola-anchor" href="#htmx:beforeSend" aria-label="Anchor link for: htmx:beforeSend">Event - <code>htmx:beforeSend</code></a>
+			</h3>
+			<p>This event is triggered right before a request is sent. You may not cancel the request with this event.</p>
+			<h5 id="details-9"><a class="zola-anchor" href="#details-9" aria-label="Anchor link for: details-9">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that dispatched the request</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:beforeSwap">
+				<a class="zola-anchor" href="#htmx:beforeSwap" aria-label="Anchor link for: htmx:beforeSwap">Event - <code>htmx:beforeSwap</code></a>
+			</h3>
+			<p>
+				This event is triggered before any new content has been <a href="https://htmx.org/docs/#swapping">swapped into the DOM</a>. Most values on <code>detail</code> can
+				be set to override subsequent behavior, other than where response headers take precedence. If you call <code>preventDefault()</code> on the event to cancel it, no
+				swap will occur.
+			</p>
+			<p>
+				You can modify the default swap behavior by modifying the <code>shouldSwap</code>, <code>selectOverride</code>, <code>swapOverride</code> and
+				<code>target</code> properties of the event detail. See the documentation on
+				<a href="https://htmx.org/docs/#modifying_swapping_behavior_with_events">configuring swapping</a> for more details.
+			</p>
+			<h5 id="details-10"><a class="zola-anchor" href="#details-10" aria-label="Anchor link for: details-10">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the target of the swap</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.boosted</code> - true if the request is via an element using boosting</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+				<li><code>detail.requestConfig.elt</code> - the element that dispatched the request</li>
+				<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>false</code> for non-200 response codes)</li>
+				<li><code>detail.ignoreTitle</code> - if <code>true</code> any title tag in the response will be ignored</li>
+				<li>
+					<code>detail.isError</code> - whether error events should be triggered and also determines the values of <code>detail.successful</code> and
+					<code>detail.failed</code> in later events
+				</li>
+				<li><code>detail.serverResponse</code> - the server response as text to be used for the swap</li>
+				<li>
+					<code>detail.selectOverride</code> - add this to use instead of an <a href="https://htmx.org/attributes/hx-select/"><code>hx-select</code></a> value
+				</li>
+				<li>
+					<code>detail.swapOverride</code> - add this to use instead of an <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a> value
+				</li>
+				<li><code>detail.target</code> - the target of the swap</li>
+			</ul>
+			<h3 id="htmx:beforeTransition">
+				<a class="zola-anchor" href="#htmx:beforeTransition" aria-label="Anchor link for: htmx:beforeTransition">Event - <code>htmx:beforeTransition</code></a>
+			</h3>
+			<p>
+				This event is triggered before a
+				<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transition</a> wrapped swap occurs. If you call
+				<code>preventDefault()</code> on the event to cancel it, the View Transition will not occur and the normal swapping logic will happen instead.
+			</p>
+			<h5 id="details-11"><a class="zola-anchor" href="#details-11" aria-label="Anchor link for: details-11">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that dispatched the request</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.boosted</code> - true if the request is via an element using boosting</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+				<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>false</code> for non-200 response codes)</li>
+				<li><code>detail.target</code> - the target of the swap</li>
+			</ul>
+			<h3 id="htmx:configRequest">
+				<a class="zola-anchor" href="#htmx:configRequest" aria-label="Anchor link for: htmx:configRequest">Event - <code>htmx:configRequest</code></a>
+			</h3>
+			<p>This event is triggered after htmx has collected parameters for inclusion in the request. It can be used to include or update the parameters that htmx will send:</p>
+			<pre
+				data-lang="javascript"
+				style="background-color: #1f2329; color: #abb2bf"
+				class="language-javascript"><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:configRequest&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
 </span><span>    </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">parameters</span><span>[</span><span style="color:#98c379;">&#39;auth_token&#39;</span><span>] = </span><span style="color:#61afef;">getAuthToken</span><span>(); </span><span style="font-style:italic;color:#848da1;">// add a new parameter into the mix
 </span><span>});
 </span></code></pre>
-<p>Note that if an input value appears more than once the value in the <code>parameters</code> object will be an array, rather
-than a single value.</p>
-<h5 id="details-12"><a class="zola-anchor" href="#details-12" aria-label="Anchor link for: details-12">Details</a></h5>
-<ul>
-<li><code>detail.parameters</code> - the parameters that will be submitted in the request</li>
-<li><code>detail.unfilteredParameters</code> - the parameters that were found before filtering by <a href="https://htmx.org/attributes/hx-params/"><code>hx-params</code></a></li>
-<li><code>detail.headers</code> - the request headers</li>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.verb</code> - the HTTP verb in use</li>
-</ul>
-<h3 id="htmx:confirm"><a class="zola-anchor" href="#htmx:confirm" aria-label="Anchor link for: htmx:confirm">Event - <code>htmx:confirm</code></a></h3>
-<p>This event is fired on every trigger for a request (not just on elements that have a hx-confirm attribute).
-It allows you to cancel (or delay) issuing the AJAX request.
-If you call <code>preventDefault()</code> on the event, it will not issue the given request.
-The <code>detail</code> object contains a function, <code>evt.detail.issueRequest(skipConfirmation=false)</code>, that can be used to issue the actual AJAX request at a later point.
-Combining these two features allows you to create an asynchronous confirmation dialog.</p>
-<p>Here is a basic example that shows the basic usage of the <code>htmx:confirm</code> event without altering the default behavior:</p>
-<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:confirm&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+			<p>Note that if an input value appears more than once the value in the <code>parameters</code> object will be an array, rather than a single value.</p>
+			<h5 id="details-12"><a class="zola-anchor" href="#details-12" aria-label="Anchor link for: details-12">Details</a></h5>
+			<ul>
+				<li><code>detail.parameters</code> - the parameters that will be submitted in the request</li>
+				<li>
+					<code>detail.unfilteredParameters</code> - the parameters that were found before filtering by
+					<a href="https://htmx.org/attributes/hx-params/"><code>hx-params</code></a>
+				</li>
+				<li><code>detail.headers</code> - the request headers</li>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.verb</code> - the HTTP verb in use</li>
+			</ul>
+			<h3 id="htmx:confirm">
+				<a class="zola-anchor" href="#htmx:confirm" aria-label="Anchor link for: htmx:confirm">Event - <code>htmx:confirm</code></a>
+			</h3>
+			<p>
+				This event is fired on every trigger for a request (not just on elements that have a hx-confirm attribute). It allows you to cancel (or delay) issuing the AJAX
+				request. If you call <code>preventDefault()</code> on the event, it will not issue the given request. The <code>detail</code> object contains a function,
+				<code>evt.detail.issueRequest(skipConfirmation=false)</code>, that can be used to issue the actual AJAX request at a later point. Combining these two features
+				allows you to create an asynchronous confirmation dialog.
+			</p>
+			<p>Here is a basic example that shows the basic usage of the <code>htmx:confirm</code> event without altering the default behavior:</p>
+			<pre
+				data-lang="javascript"
+				style="background-color: #1f2329; color: #abb2bf"
+				class="language-javascript"><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:confirm&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
 </span><span>  </span><span style="font-style:italic;color:#848da1;">// 0. To modify the behavior only for elements with the hx-confirm attribute,
 </span><span>  </span><span style="font-style:italic;color:#848da1;">//    check if evt.detail.target.hasAttribute(&#39;hx-confirm&#39;)
 </span><span>
@@ -239,8 +307,14 @@ Combining these two features allows you to create an asynchronous confirmation d
 </span><span>  </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#61afef;">issueRequest</span><span>(); </span><span style="font-style:italic;color:#848da1;">// or evt.detail.issueRequest(true) to skip the built-in window.confirm()
 </span><span>});
 </span></code></pre>
-<p>And here is an example using <a rel="noopener" target="_blank" href="https://sweetalert.js.org/guides/">sweet alert</a> on any element with a <code>confirm-with-sweet-alert="{question}"</code> attribute on it:</p>
-<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:confirm&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+			<p>
+				And here is an example using <a rel="noopener" target="_blank" href="https://sweetalert.js.org/guides/">sweet alert</a> on any element with a
+				<code>confirm-with-sweet-alert="{question}"</code> attribute on it:
+			</p>
+			<pre
+				data-lang="javascript"
+				style="background-color: #1f2329; color: #abb2bf"
+				class="language-javascript"><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:confirm&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
 </span><span>  </span><span style="font-style:italic;color:#848da1;">// 1. The requirement to show the sweet alert is that the element has a confirm-with-sweet-alert
 </span><span>  </span><span style="font-style:italic;color:#848da1;">//    attribute on it, if it doesn&#39;t we can return early and let the default behavior happen
 </span><span>  </span><span style="color:#c678dd;">if </span><span>(!</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.target.</span><span style="color:#56b6c2;">hasAttribute</span><span>(</span><span style="color:#98c379;">&#39;confirm-with-sweet-alert&#39;</span><span>)) </span><span style="color:#c678dd;">return
@@ -266,251 +340,339 @@ Combining these two features allows you to create an asynchronous confirmation d
 </span><span>  });
 </span><span>});
 </span></code></pre>
-<h5 id="details-13"><a class="zola-anchor" href="#details-13" aria-label="Anchor link for: details-13">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element in question</li>
-<li><code>detail.etc</code> - additional request information (mostly unused)</li>
-<li><code>detail.issueRequest(skipConfirmation=false)</code> - a function that can be invoked to issue the request (should be paired with <code>evt.preventDefault()</code>!), if skipConfirmation is <code>true</code> the original <code>window.confirm()</code> is not executed</li>
-<li><code>detail.path</code> - the path of the request</li>
-<li><code>detail.target</code> - the element that triggered the request</li>
-<li><code>detail.triggeringEvent</code> - the original event that triggered this request</li>
-<li><code>detail.verb</code> - the verb of the request (e.g. <code>GET</code>)</li>
-<li><code>detail.question</code> - the question passed to <code>hx-confirm</code> attribute (only available if <code>hx-confirm</code> attribute is present)</li>
-</ul>
-<h3 id="htmx:historyCacheError"><a class="zola-anchor" href="#htmx:historyCacheError" aria-label="Anchor link for: htmx:historyCacheError">Event - <code>htmx:historyCacheError</code></a></h3>
-<p>This event is triggered when an attempt to save the cache to <code>localStorage</code> fails</p>
-<h5 id="details-14"><a class="zola-anchor" href="#details-14" aria-label="Anchor link for: details-14">Details</a></h5>
-<ul>
-<li><code>detail.cause</code> - the <code>Exception</code> that was thrown when attempting to save history to <code>localStorage</code></li>
-</ul>
-<h3 id="htmx:historyCacheHit"><a class="zola-anchor" href="#htmx:historyCacheHit" aria-label="Anchor link for: htmx:historyCacheHit">Event - <code>htmx:historyCacheHit</code></a></h3>
-<p>This event is triggered when a cache hit occurs when restoring history</p>
-<p>You can prevent the history restoration via <code>preventDefault()</code> to allow alternative restore handling.
-You can also override the details of the history restoration request in this event if required</p>
-<h5 id="details-15"><a class="zola-anchor" href="#details-15" aria-label="Anchor link for: details-15">Details</a></h5>
-<ul>
-<li><code>detail.historyElt</code> - the history element or body that will get replaced</li>
-<li><code>detail.item.content</code> - the content of the cache that will be swapped in</li>
-<li><code>detail.item.title</code> - the page title to update from the cache</li>
-<li><code>detail.path</code> - the path and query of the page being restored</li>
-<li><code>detail.swapSpec</code> - the swapSpec to be used containing the defatul swapStyle=‘innerHTML’</li>
-</ul>
-<h3 id="htmx:historyCacheMiss"><a class="zola-anchor" href="#htmx:historyCacheMiss" aria-label="Anchor link for: htmx:historyCacheMiss">Event - <code>htmx:historyCacheMiss</code></a></h3>
-<p>This event is triggered when a cache miss occurs when restoring history</p>
-<p>You can prevent the history restoration via <code>preventDefault()</code> to allow alternative restore handling.
-You can also modify the xhr request or other details before it makes the the request to restore history</p>
-<h5 id="details-16"><a class="zola-anchor" href="#details-16" aria-label="Anchor link for: details-16">Details</a></h5>
-<ul>
-<li><code>detail.historyElt</code> - the history element or body that will get replaced</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code> that will retrieve the remote content for restoration</li>
-<li><code>detail.path</code> - the path and query of the page being restored</li>
-<li><code>detail.swapSpec</code> - the swapSpec to be used containing the defatul swapStyle=‘innerHTML’</li>
-</ul>
-<h3 id="htmx:historyCacheMissLoadError"><a class="zola-anchor" href="#htmx:historyCacheMissLoadError" aria-label="Anchor link for: htmx:historyCacheMissLoadError">Event - <code>htmx:historyCacheMissLoadError</code></a></h3>
-<p>This event is triggered when a cache miss occurs and a response has been retrieved from the server
-for the content to restore, but the response is an error (e.g. <code>404</code>)</p>
-<h5 id="details-17"><a class="zola-anchor" href="#details-17" aria-label="Anchor link for: details-17">Details</a></h5>
-<ul>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.path</code> - the path and query of the page being restored</li>
-</ul>
-<h3 id="htmx:historyCacheMissLoad"><a class="zola-anchor" href="#htmx:historyCacheMissLoad" aria-label="Anchor link for: htmx:historyCacheMissLoad">Event - <code>htmx:historyCacheMissLoad</code></a></h3>
-<p>This event is triggered when a cache miss occurs and a response has been retrieved successfully from the server
-for the content to restore</p>
-<p>You can modify the details before it makes the swap to restore the history</p>
-<h5 id="details-18"><a class="zola-anchor" href="#details-18" aria-label="Anchor link for: details-18">Details</a></h5>
-<ul>
-<li><code>detail.historyElt</code> - the history element or body that will get replaced</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.path</code> - the path and query of the page being restored</li>
-<li><code>detail.response</code> - the response text that will be swapped in</li>
-<li><code>detail.swapSpec</code> - the swapSpec to be used containing the defatul swapStyle=‘innerHTML’</li>
-</ul>
-<h3 id="htmx:historyRestore"><a class="zola-anchor" href="#htmx:historyRestore" aria-label="Anchor link for: htmx:historyRestore">Event - <code>htmx:historyRestore</code></a></h3>
-<p>This event is triggered when htmx handles a history restoration action</p>
-<h5 id="details-19"><a class="zola-anchor" href="#details-19" aria-label="Anchor link for: details-19">Details</a></h5>
-<ul>
-<li><code>detail.path</code> - the path and query of the page being restored</li>
-<li><code>detail.cacheMiss</code> - set <code>true</code> if restore was a cache miss</li>
-<li><code>detail.serverResponse</code> - with cache miss has the response text replaced</li>
-<li><code>detail.item</code> - with cache hit the cache details that was restored</li>
-</ul>
-<h3 id="htmx:beforeHistorySave"><a class="zola-anchor" href="#htmx:beforeHistorySave" aria-label="Anchor link for: htmx:beforeHistorySave">Event - <code>htmx:beforeHistorySave</code></a></h3>
-<p>This event is triggered before the content is saved in the history cache.</p>
-<p>You can modify the contents of the historyElt to remove 3rd party javascript changes so a clean copy of the content can be backed up to the history cache</p>
-<h5 id="details-20"><a class="zola-anchor" href="#details-20" aria-label="Anchor link for: details-20">Details</a></h5>
-<ul>
-<li><code>detail.path</code> - the path and query of the page being saved</li>
-<li><code>detail.historyElt</code> - the history element about to be saved</li>
-</ul>
-<h3 id="htmx:load"><a class="zola-anchor" href="#htmx:load" aria-label="Anchor link for: htmx:load">Event - <code>htmx:load</code></a></h3>
-<p>This event is triggered when a new node is loaded into the DOM by htmx. Note that this event is also triggered when htmx is first initialized, with the document body as the target.</p>
-<h5 id="details-21"><a class="zola-anchor" href="#details-21" aria-label="Anchor link for: details-21">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the newly added element</li>
-</ul>
-<h3 id="htmx:noSSESourceError"><a class="zola-anchor" href="#htmx:noSSESourceError" aria-label="Anchor link for: htmx:noSSESourceError">Event - <code>htmx:noSSESourceError</code></a></h3>
-<p>This event is triggered when an element refers to an SSE event in its trigger, but no parent SSE source has been defined</p>
-<h5 id="details-22"><a class="zola-anchor" href="#details-22" aria-label="Anchor link for: details-22">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element with the bad SSE trigger</li>
-</ul>
-<h3 id="htmx:oobAfterSwap"><a class="zola-anchor" href="#htmx:oobAfterSwap" aria-label="Anchor link for: htmx:oobAfterSwap">Event - <code>htmx:oobAfterSwap</code></a></h3>
-<p>This event is triggered as part of an <a href="https://htmx.org/docs/#oob_swaps">out of band swap</a> and behaves identically to an <a href="https://htmx.org/events/#htmx:afterSwap">after swap event</a></p>
-<h5 id="details-23"><a class="zola-anchor" href="#details-23" aria-label="Anchor link for: details-23">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the swapped in element</li>
-<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>true</code>)</li>
-<li><code>detail.target</code> - the target of the swap</li>
-<li><code>detail.fragment</code> - the response fragment</li>
-</ul>
-<h3 id="htmx:oobBeforeSwap"><a class="zola-anchor" href="#htmx:oobBeforeSwap" aria-label="Anchor link for: htmx:oobBeforeSwap">Event - <code>htmx:oobBeforeSwap</code></a></h3>
-<p>This event is triggered as part of an <a href="https://htmx.org/docs/#oob_swaps">out of band swap</a> and behaves identically to a <a href="https://htmx.org/events/#htmx:beforeSwap">before swap event</a></p>
-<h5 id="details-24"><a class="zola-anchor" href="#details-24" aria-label="Anchor link for: details-24">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the target of the swap</li>
-<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>true</code>)</li>
-<li><code>detail.target</code> - the target of the swap</li>
-<li><code>detail.fragment</code> - the response fragment</li>
-</ul>
-<h3 id="htmx:oobErrorNoTarget"><a class="zola-anchor" href="#htmx:oobErrorNoTarget" aria-label="Anchor link for: htmx:oobErrorNoTarget">Event - <code>htmx:oobErrorNoTarget</code></a></h3>
-<p>This event is triggered when an <a href="https://htmx.org/docs/#oob_swaps">out of band swap</a> does not have a corresponding element
-in the DOM to switch with.</p>
-<h5 id="details-25"><a class="zola-anchor" href="#details-25" aria-label="Anchor link for: details-25">Details</a></h5>
-<ul>
-<li><code>detail.content</code> - the element with the bad oob <code>id</code></li>
-</ul>
-<h3 id="htmx:onLoadError"><a class="zola-anchor" href="#htmx:onLoadError" aria-label="Anchor link for: htmx:onLoadError">Event - <code>htmx:onLoadError</code></a></h3>
-<p>This event is triggered when an error occurs during the <code>load</code> handling of an AJAX call</p>
-<h5 id="details-26"><a class="zola-anchor" href="#details-26" aria-label="Anchor link for: details-26">Details</a></h5>
-<ul>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.exception</code> - the exception that occurred</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:prompt"><a class="zola-anchor" href="#htmx:prompt" aria-label="Anchor link for: htmx:prompt">Event - <code>htmx:prompt</code></a></h3>
-<p>This event is triggered after a prompt has been shown to the user with the <a href="https://htmx.org/attributes/hx-prompt/"><code>hx-prompt</code></a>
-attribute.  If this event is cancelled, the AJAX request will not occur.</p>
-<h5 id="details-27"><a class="zola-anchor" href="#details-27" aria-label="Anchor link for: details-27">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.prompt</code> - the user response to the prompt</li>
-</ul>
-<h3 id="htmx:beforeHistoryUpdate"><a class="zola-anchor" href="#htmx:beforeHistoryUpdate" aria-label="Anchor link for: htmx:beforeHistoryUpdate">Event - <code>htmx:beforeHistoryUpdate</code></a></h3>
-<p>This event is triggered before a history update is performed. It can be
-used to modify the <code>path</code> or <code>type</code> used to update the history.</p>
-<h5 id="details-28"><a class="zola-anchor" href="#details-28" aria-label="Anchor link for: details-28">Details</a></h5>
-<ul>
-<li><code>detail.history</code> - the <code>path</code> and <code>type</code> (push, replace) for the history update</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:pushedIntoHistory"><a class="zola-anchor" href="#htmx:pushedIntoHistory" aria-label="Anchor link for: htmx:pushedIntoHistory">Event - <code>htmx:pushedIntoHistory</code></a></h3>
-<p>This event is triggered after a URL has been pushed into history.</p>
-<h5 id="details-29"><a class="zola-anchor" href="#details-29" aria-label="Anchor link for: details-29">Details</a></h5>
-<ul>
-<li><code>detail.path</code> - the path and query of the URL that has been pushed into history</li>
-</ul>
-<h3 id="htmx:replacedInHistory"><a class="zola-anchor" href="#htmx:replacedInHistory" aria-label="Anchor link for: htmx:replacedInHistory">Event - <code>htmx:replacedInHistory</code></a></h3>
-<p>This event is triggered after a URL has been replaced in history.</p>
-<h5 id="details-30"><a class="zola-anchor" href="#details-30" aria-label="Anchor link for: details-30">Details</a></h5>
-<ul>
-<li><code>detail.path</code> - the path and query of the URL that has been replaced in history</li>
-</ul>
-<h3 id="htmx:responseError"><a class="zola-anchor" href="#htmx:responseError" aria-label="Anchor link for: htmx:responseError">Event - <code>htmx:responseError</code></a></h3>
-<p>This event is triggered when an HTTP error response occurs</p>
-<h5 id="details-31"><a class="zola-anchor" href="#details-31" aria-label="Anchor link for: details-31">Details</a></h5>
-<ul>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:sendAbort"><a class="zola-anchor" href="#htmx:sendAbort" aria-label="Anchor link for: htmx:sendAbort">Event - <code>htmx:sendAbort</code></a></h3>
-<p>This event is triggered when a request is aborted</p>
-<h5 id="details-32"><a class="zola-anchor" href="#details-32" aria-label="Anchor link for: details-32">Details</a></h5>
-<ul>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:sendError"><a class="zola-anchor" href="#htmx:sendError" aria-label="Anchor link for: htmx:sendError">Event - <code>htmx:sendError</code></a></h3>
-<p>This event is triggered when a network error prevents an HTTP request from occurring</p>
-<h5 id="details-33"><a class="zola-anchor" href="#details-33" aria-label="Anchor link for: details-33">Details</a></h5>
-<ul>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:sseError"><a class="zola-anchor" href="#htmx:sseError" aria-label="Anchor link for: htmx:sseError">Event - <code>htmx:sseError</code></a></h3>
-<p>This event is triggered when an error occurs with an SSE source</p>
-<h5 id="details-34"><a class="zola-anchor" href="#details-34" aria-label="Anchor link for: details-34">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element with the bad SSE source</li>
-<li><code>detail.error</code> - the error</li>
-<li><code>detail.source</code> - the SSE source</li>
-</ul>
-<h3 id="htmx:swapError"><a class="zola-anchor" href="#htmx:swapError" aria-label="Anchor link for: htmx:swapError">Event - <code>htmx:swapError</code></a></h3>
-<p>This event is triggered when an error occurs during the swap phase</p>
-<h5 id="details-35"><a class="zola-anchor" href="#details-35" aria-label="Anchor link for: details-35">Details</a></h5>
-<ul>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:targetError"><a class="zola-anchor" href="#htmx:targetError" aria-label="Anchor link for: htmx:targetError">Event - <code>htmx:targetError</code></a></h3>
-<p>This event is triggered when a bad selector is used for a <a href="https://htmx.org/attributes/hx-target/"><code>hx-target</code></a> attribute (e.g. an
-element ID without a preceding <code>#</code>)</p>
-<h5 id="details-36"><a class="zola-anchor" href="#details-36" aria-label="Anchor link for: details-36">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.target</code> - the bad CSS selector</li>
-</ul>
-<h3 id="htmx:timeout"><a class="zola-anchor" href="#htmx:timeout" aria-label="Anchor link for: htmx:timeout">Event - <code>htmx:timeout</code></a></h3>
-<p>This event is triggered when a request timeout occurs.  This wraps the typical <code>timeout</code> event of XMLHttpRequest.</p>
-<p>Timeout time can be set using <code>htmx.config.timeout</code> or per element using <a href="https://htmx.org/attributes/hx-request/"><code>hx-request</code></a></p>
-<h5 id="details-37"><a class="zola-anchor" href="#details-37" aria-label="Anchor link for: details-37">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that dispatched the request</li>
-<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
-<li><code>detail.target</code> - the target of the request</li>
-<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
-</ul>
-<h3 id="htmx:trigger"><a class="zola-anchor" href="#htmx:trigger" aria-label="Anchor link for: htmx:trigger">Event - <code>htmx:trigger</code></a></h3>
-<p>This event is triggered whenever an AJAX request would be, even if no AJAX request is specified. It
-is primarily intended to allow <code>hx-trigger</code> to execute client-side scripts; AJAX requests have more
-granular events available, like <a href="https://htmx.org/events/#htmx:beforeRequest"><code>htmx:beforeRequest</code></a> or <a href="https://htmx.org/events/#htmx:afterRequest"><code>htmx:afterRequest</code></a>.</p>
-<h5 id="details-38"><a class="zola-anchor" href="#details-38" aria-label="Anchor link for: details-38">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-</ul>
-<h3 id="htmx:validateUrl"><a class="zola-anchor" href="#htmx:validateUrl" aria-label="Anchor link for: htmx:validateUrl">Event - <code>htmx:validateUrl</code></a></h3>
-<p>This event is triggered before a request is made, allowing you to validate the URL that htmx is going to request.  If
-<code>preventDefault()</code> is invoked on the event, the request will not be made.</p>
-<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:validateUrl&#39;</span><span>, </span><span style="color:#c678dd;">function </span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+			<h5 id="details-13"><a class="zola-anchor" href="#details-13" aria-label="Anchor link for: details-13">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element in question</li>
+				<li><code>detail.etc</code> - additional request information (mostly unused)</li>
+				<li>
+					<code>detail.issueRequest(skipConfirmation=false)</code> - a function that can be invoked to issue the request (should be paired with
+					<code>evt.preventDefault()</code>!), if skipConfirmation is <code>true</code> the original <code>window.confirm()</code> is not executed
+				</li>
+				<li><code>detail.path</code> - the path of the request</li>
+				<li><code>detail.target</code> - the element that triggered the request</li>
+				<li><code>detail.triggeringEvent</code> - the original event that triggered this request</li>
+				<li><code>detail.verb</code> - the verb of the request (e.g. <code>GET</code>)</li>
+				<li><code>detail.question</code> - the question passed to <code>hx-confirm</code> attribute (only available if <code>hx-confirm</code> attribute is present)</li>
+			</ul>
+			<h3 id="htmx:historyCacheError">
+				<a class="zola-anchor" href="#htmx:historyCacheError" aria-label="Anchor link for: htmx:historyCacheError">Event - <code>htmx:historyCacheError</code></a>
+			</h3>
+			<p>This event is triggered when an attempt to save the cache to <code>localStorage</code> fails</p>
+			<h5 id="details-14"><a class="zola-anchor" href="#details-14" aria-label="Anchor link for: details-14">Details</a></h5>
+			<ul>
+				<li><code>detail.cause</code> - the <code>Exception</code> that was thrown when attempting to save history to <code>localStorage</code></li>
+			</ul>
+			<h3 id="htmx:historyCacheHit">
+				<a class="zola-anchor" href="#htmx:historyCacheHit" aria-label="Anchor link for: htmx:historyCacheHit">Event - <code>htmx:historyCacheHit</code></a>
+			</h3>
+			<p>This event is triggered when a cache hit occurs when restoring history</p>
+			<p>
+				You can prevent the history restoration via <code>preventDefault()</code> to allow alternative restore handling. You can also override the details of the history
+				restoration request in this event if required
+			</p>
+			<h5 id="details-15"><a class="zola-anchor" href="#details-15" aria-label="Anchor link for: details-15">Details</a></h5>
+			<ul>
+				<li><code>detail.historyElt</code> - the history element or body that will get replaced</li>
+				<li><code>detail.item.content</code> - the content of the cache that will be swapped in</li>
+				<li><code>detail.item.title</code> - the page title to update from the cache</li>
+				<li><code>detail.path</code> - the path and query of the page being restored</li>
+				<li><code>detail.swapSpec</code> - the swapSpec to be used containing the defatul swapStyle=‘innerHTML’</li>
+			</ul>
+			<h3 id="htmx:historyCacheMiss">
+				<a class="zola-anchor" href="#htmx:historyCacheMiss" aria-label="Anchor link for: htmx:historyCacheMiss">Event - <code>htmx:historyCacheMiss</code></a>
+			</h3>
+			<p>This event is triggered when a cache miss occurs when restoring history</p>
+			<p>
+				You can prevent the history restoration via <code>preventDefault()</code> to allow alternative restore handling. You can also modify the xhr request or other
+				details before it makes the the request to restore history
+			</p>
+			<h5 id="details-16"><a class="zola-anchor" href="#details-16" aria-label="Anchor link for: details-16">Details</a></h5>
+			<ul>
+				<li><code>detail.historyElt</code> - the history element or body that will get replaced</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code> that will retrieve the remote content for restoration</li>
+				<li><code>detail.path</code> - the path and query of the page being restored</li>
+				<li><code>detail.swapSpec</code> - the swapSpec to be used containing the defatul swapStyle=‘innerHTML’</li>
+			</ul>
+			<h3 id="htmx:historyCacheMissLoadError">
+				<a class="zola-anchor" href="#htmx:historyCacheMissLoadError" aria-label="Anchor link for: htmx:historyCacheMissLoadError"
+					>Event - <code>htmx:historyCacheMissLoadError</code></a
+				>
+			</h3>
+			<p>
+				This event is triggered when a cache miss occurs and a response has been retrieved from the server for the content to restore, but the response is an error (e.g.
+				<code>404</code>)
+			</p>
+			<h5 id="details-17"><a class="zola-anchor" href="#details-17" aria-label="Anchor link for: details-17">Details</a></h5>
+			<ul>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.path</code> - the path and query of the page being restored</li>
+			</ul>
+			<h3 id="htmx:historyCacheMissLoad">
+				<a class="zola-anchor" href="#htmx:historyCacheMissLoad" aria-label="Anchor link for: htmx:historyCacheMissLoad">Event - <code>htmx:historyCacheMissLoad</code></a>
+			</h3>
+			<p>This event is triggered when a cache miss occurs and a response has been retrieved successfully from the server for the content to restore</p>
+			<p>You can modify the details before it makes the swap to restore the history</p>
+			<h5 id="details-18"><a class="zola-anchor" href="#details-18" aria-label="Anchor link for: details-18">Details</a></h5>
+			<ul>
+				<li><code>detail.historyElt</code> - the history element or body that will get replaced</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.path</code> - the path and query of the page being restored</li>
+				<li><code>detail.response</code> - the response text that will be swapped in</li>
+				<li><code>detail.swapSpec</code> - the swapSpec to be used containing the defatul swapStyle=‘innerHTML’</li>
+			</ul>
+			<h3 id="htmx:historyRestore">
+				<a class="zola-anchor" href="#htmx:historyRestore" aria-label="Anchor link for: htmx:historyRestore">Event - <code>htmx:historyRestore</code></a>
+			</h3>
+			<p>This event is triggered when htmx handles a history restoration action</p>
+			<h5 id="details-19"><a class="zola-anchor" href="#details-19" aria-label="Anchor link for: details-19">Details</a></h5>
+			<ul>
+				<li><code>detail.path</code> - the path and query of the page being restored</li>
+				<li><code>detail.cacheMiss</code> - set <code>true</code> if restore was a cache miss</li>
+				<li><code>detail.serverResponse</code> - with cache miss has the response text replaced</li>
+				<li><code>detail.item</code> - with cache hit the cache details that was restored</li>
+			</ul>
+			<h3 id="htmx:beforeHistorySave">
+				<a class="zola-anchor" href="#htmx:beforeHistorySave" aria-label="Anchor link for: htmx:beforeHistorySave">Event - <code>htmx:beforeHistorySave</code></a>
+			</h3>
+			<p>This event is triggered before the content is saved in the history cache.</p>
+			<p>You can modify the contents of the historyElt to remove 3rd party javascript changes so a clean copy of the content can be backed up to the history cache</p>
+			<h5 id="details-20"><a class="zola-anchor" href="#details-20" aria-label="Anchor link for: details-20">Details</a></h5>
+			<ul>
+				<li><code>detail.path</code> - the path and query of the page being saved</li>
+				<li><code>detail.historyElt</code> - the history element about to be saved</li>
+			</ul>
+			<h3 id="htmx:load">
+				<a class="zola-anchor" href="#htmx:load" aria-label="Anchor link for: htmx:load">Event - <code>htmx:load</code></a>
+			</h3>
+			<p>
+				This event is triggered when a new node is loaded into the DOM by htmx. Note that this event is also triggered when htmx is first initialized, with the document
+				body as the target.
+			</p>
+			<h5 id="details-21"><a class="zola-anchor" href="#details-21" aria-label="Anchor link for: details-21">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the newly added element</li>
+			</ul>
+			<h3 id="htmx:noSSESourceError">
+				<a class="zola-anchor" href="#htmx:noSSESourceError" aria-label="Anchor link for: htmx:noSSESourceError">Event - <code>htmx:noSSESourceError</code></a>
+			</h3>
+			<p>This event is triggered when an element refers to an SSE event in its trigger, but no parent SSE source has been defined</p>
+			<h5 id="details-22"><a class="zola-anchor" href="#details-22" aria-label="Anchor link for: details-22">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element with the bad SSE trigger</li>
+			</ul>
+			<h3 id="htmx:oobAfterSwap">
+				<a class="zola-anchor" href="#htmx:oobAfterSwap" aria-label="Anchor link for: htmx:oobAfterSwap">Event - <code>htmx:oobAfterSwap</code></a>
+			</h3>
+			<p>
+				This event is triggered as part of an <a href="https://htmx.org/docs/#oob_swaps">out of band swap</a> and behaves identically to an
+				<a href="https://htmx.org/events/#htmx:afterSwap">after swap event</a>
+			</p>
+			<h5 id="details-23"><a class="zola-anchor" href="#details-23" aria-label="Anchor link for: details-23">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the swapped in element</li>
+				<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>true</code>)</li>
+				<li><code>detail.target</code> - the target of the swap</li>
+				<li><code>detail.fragment</code> - the response fragment</li>
+			</ul>
+			<h3 id="htmx:oobBeforeSwap">
+				<a class="zola-anchor" href="#htmx:oobBeforeSwap" aria-label="Anchor link for: htmx:oobBeforeSwap">Event - <code>htmx:oobBeforeSwap</code></a>
+			</h3>
+			<p>
+				This event is triggered as part of an <a href="https://htmx.org/docs/#oob_swaps">out of band swap</a> and behaves identically to a
+				<a href="https://htmx.org/events/#htmx:beforeSwap">before swap event</a>
+			</p>
+			<h5 id="details-24"><a class="zola-anchor" href="#details-24" aria-label="Anchor link for: details-24">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the target of the swap</li>
+				<li><code>detail.shouldSwap</code> - if the content will be swapped (defaults to <code>true</code>)</li>
+				<li><code>detail.target</code> - the target of the swap</li>
+				<li><code>detail.fragment</code> - the response fragment</li>
+			</ul>
+			<h3 id="htmx:oobErrorNoTarget">
+				<a class="zola-anchor" href="#htmx:oobErrorNoTarget" aria-label="Anchor link for: htmx:oobErrorNoTarget">Event - <code>htmx:oobErrorNoTarget</code></a>
+			</h3>
+			<p>This event is triggered when an <a href="https://htmx.org/docs/#oob_swaps">out of band swap</a> does not have a corresponding element in the DOM to switch with.</p>
+			<h5 id="details-25"><a class="zola-anchor" href="#details-25" aria-label="Anchor link for: details-25">Details</a></h5>
+			<ul>
+				<li><code>detail.content</code> - the element with the bad oob <code>id</code></li>
+			</ul>
+			<h3 id="htmx:onLoadError">
+				<a class="zola-anchor" href="#htmx:onLoadError" aria-label="Anchor link for: htmx:onLoadError">Event - <code>htmx:onLoadError</code></a>
+			</h3>
+			<p>This event is triggered when an error occurs during the <code>load</code> handling of an AJAX call</p>
+			<h5 id="details-26"><a class="zola-anchor" href="#details-26" aria-label="Anchor link for: details-26">Details</a></h5>
+			<ul>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.exception</code> - the exception that occurred</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:prompt">
+				<a class="zola-anchor" href="#htmx:prompt" aria-label="Anchor link for: htmx:prompt">Event - <code>htmx:prompt</code></a>
+			</h3>
+			<p>
+				This event is triggered after a prompt has been shown to the user with the <a href="https://htmx.org/attributes/hx-prompt/"><code>hx-prompt</code></a> attribute. If
+				this event is cancelled, the AJAX request will not occur.
+			</p>
+			<h5 id="details-27"><a class="zola-anchor" href="#details-27" aria-label="Anchor link for: details-27">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.prompt</code> - the user response to the prompt</li>
+			</ul>
+			<h3 id="htmx:beforeHistoryUpdate">
+				<a class="zola-anchor" href="#htmx:beforeHistoryUpdate" aria-label="Anchor link for: htmx:beforeHistoryUpdate">Event - <code>htmx:beforeHistoryUpdate</code></a>
+			</h3>
+			<p>This event is triggered before a history update is performed. It can be used to modify the <code>path</code> or <code>type</code> used to update the history.</p>
+			<h5 id="details-28"><a class="zola-anchor" href="#details-28" aria-label="Anchor link for: details-28">Details</a></h5>
+			<ul>
+				<li><code>detail.history</code> - the <code>path</code> and <code>type</code> (push, replace) for the history update</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:pushedIntoHistory">
+				<a class="zola-anchor" href="#htmx:pushedIntoHistory" aria-label="Anchor link for: htmx:pushedIntoHistory">Event - <code>htmx:pushedIntoHistory</code></a>
+			</h3>
+			<p>This event is triggered after a URL has been pushed into history.</p>
+			<h5 id="details-29"><a class="zola-anchor" href="#details-29" aria-label="Anchor link for: details-29">Details</a></h5>
+			<ul>
+				<li><code>detail.path</code> - the path and query of the URL that has been pushed into history</li>
+			</ul>
+			<h3 id="htmx:replacedInHistory">
+				<a class="zola-anchor" href="#htmx:replacedInHistory" aria-label="Anchor link for: htmx:replacedInHistory">Event - <code>htmx:replacedInHistory</code></a>
+			</h3>
+			<p>This event is triggered after a URL has been replaced in history.</p>
+			<h5 id="details-30"><a class="zola-anchor" href="#details-30" aria-label="Anchor link for: details-30">Details</a></h5>
+			<ul>
+				<li><code>detail.path</code> - the path and query of the URL that has been replaced in history</li>
+			</ul>
+			<h3 id="htmx:responseError">
+				<a class="zola-anchor" href="#htmx:responseError" aria-label="Anchor link for: htmx:responseError">Event - <code>htmx:responseError</code></a>
+			</h3>
+			<p>This event is triggered when an HTTP error response occurs</p>
+			<h5 id="details-31"><a class="zola-anchor" href="#details-31" aria-label="Anchor link for: details-31">Details</a></h5>
+			<ul>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:sendAbort">
+				<a class="zola-anchor" href="#htmx:sendAbort" aria-label="Anchor link for: htmx:sendAbort">Event - <code>htmx:sendAbort</code></a>
+			</h3>
+			<p>This event is triggered when a request is aborted</p>
+			<h5 id="details-32"><a class="zola-anchor" href="#details-32" aria-label="Anchor link for: details-32">Details</a></h5>
+			<ul>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:sendError">
+				<a class="zola-anchor" href="#htmx:sendError" aria-label="Anchor link for: htmx:sendError">Event - <code>htmx:sendError</code></a>
+			</h3>
+			<p>This event is triggered when a network error prevents an HTTP request from occurring</p>
+			<h5 id="details-33"><a class="zola-anchor" href="#details-33" aria-label="Anchor link for: details-33">Details</a></h5>
+			<ul>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:sseError">
+				<a class="zola-anchor" href="#htmx:sseError" aria-label="Anchor link for: htmx:sseError">Event - <code>htmx:sseError</code></a>
+			</h3>
+			<p>This event is triggered when an error occurs with an SSE source</p>
+			<h5 id="details-34"><a class="zola-anchor" href="#details-34" aria-label="Anchor link for: details-34">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element with the bad SSE source</li>
+				<li><code>detail.error</code> - the error</li>
+				<li><code>detail.source</code> - the SSE source</li>
+			</ul>
+			<h3 id="htmx:swapError">
+				<a class="zola-anchor" href="#htmx:swapError" aria-label="Anchor link for: htmx:swapError">Event - <code>htmx:swapError</code></a>
+			</h3>
+			<p>This event is triggered when an error occurs during the swap phase</p>
+			<h5 id="details-35"><a class="zola-anchor" href="#details-35" aria-label="Anchor link for: details-35">Details</a></h5>
+			<ul>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:targetError">
+				<a class="zola-anchor" href="#htmx:targetError" aria-label="Anchor link for: htmx:targetError">Event - <code>htmx:targetError</code></a>
+			</h3>
+			<p>
+				This event is triggered when a bad selector is used for a <a href="https://htmx.org/attributes/hx-target/"><code>hx-target</code></a> attribute (e.g. an element ID
+				without a preceding <code>#</code>)
+			</p>
+			<h5 id="details-36"><a class="zola-anchor" href="#details-36" aria-label="Anchor link for: details-36">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.target</code> - the bad CSS selector</li>
+			</ul>
+			<h3 id="htmx:timeout">
+				<a class="zola-anchor" href="#htmx:timeout" aria-label="Anchor link for: htmx:timeout">Event - <code>htmx:timeout</code></a>
+			</h3>
+			<p>This event is triggered when a request timeout occurs. This wraps the typical <code>timeout</code> event of XMLHttpRequest.</p>
+			<p>
+				Timeout time can be set using <code>htmx.config.timeout</code> or per element using <a href="https://htmx.org/attributes/hx-request/"><code>hx-request</code></a>
+			</p>
+			<h5 id="details-37"><a class="zola-anchor" href="#details-37" aria-label="Anchor link for: details-37">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that dispatched the request</li>
+				<li><code>detail.xhr</code> - the <code>XMLHttpRequest</code></li>
+				<li><code>detail.target</code> - the target of the request</li>
+				<li><code>detail.requestConfig</code> - the configuration of the AJAX request</li>
+			</ul>
+			<h3 id="htmx:trigger">
+				<a class="zola-anchor" href="#htmx:trigger" aria-label="Anchor link for: htmx:trigger">Event - <code>htmx:trigger</code></a>
+			</h3>
+			<p>
+				This event is triggered whenever an AJAX request would be, even if no AJAX request is specified. It is primarily intended to allow <code>hx-trigger</code> to
+				execute client-side scripts; AJAX requests have more granular events available, like
+				<a href="https://htmx.org/events/#htmx:beforeRequest"><code>htmx:beforeRequest</code></a> or
+				<a href="https://htmx.org/events/#htmx:afterRequest"><code>htmx:afterRequest</code></a
+				>.
+			</p>
+			<h5 id="details-38"><a class="zola-anchor" href="#details-38" aria-label="Anchor link for: details-38">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+			</ul>
+			<h3 id="htmx:validateUrl">
+				<a class="zola-anchor" href="#htmx:validateUrl" aria-label="Anchor link for: htmx:validateUrl">Event - <code>htmx:validateUrl</code></a>
+			</h3>
+			<p>
+				This event is triggered before a request is made, allowing you to validate the URL that htmx is going to request. If <code>preventDefault()</code> is invoked on the
+				event, the request will not be made.
+			</p>
+			<pre
+				data-lang="javascript"
+				style="background-color: #1f2329; color: #abb2bf"
+				class="language-javascript"><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:validateUrl&#39;</span><span>, </span><span style="color:#c678dd;">function </span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
 </span><span>  </span><span style="font-style:italic;color:#848da1;">// only allow requests to the current server as well as myserver.com
 </span><span>  </span><span style="color:#c678dd;">if </span><span>(!</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">sameHost </span><span>&amp;&amp; </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">url</span><span>.hostname !== </span><span style="color:#98c379;">&quot;myserver.com&quot;</span><span>) {
 </span><span>    </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#56b6c2;">preventDefault</span><span>();
 </span><span>  }
 </span><span>});
 </span></code></pre>
-<h5 id="details-39"><a class="zola-anchor" href="#details-39" aria-label="Anchor link for: details-39">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.url</code> - the URL Object representing the URL that a request will be sent to.</li>
-<li><code>detail.sameHost</code> - will be <code>true</code> if the request is to the same host as the document</li>
-</ul>
-<h3 id="htmx:validation:validate"><a class="zola-anchor" href="#htmx:validation:validate" aria-label="Anchor link for: htmx:validation:validate">Event - <code>htmx:validation:validate</code></a></h3>
-<p>This event is triggered before an element is validated.  It can be used with the <code>elt.setCustomValidity()</code> method
-to implement custom validation rules.</p>
-<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&quot;/test&quot;</span><span>&gt;
+			<h5 id="details-39"><a class="zola-anchor" href="#details-39" aria-label="Anchor link for: details-39">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.url</code> - the URL Object representing the URL that a request will be sent to.</li>
+				<li><code>detail.sameHost</code> - will be <code>true</code> if the request is to the same host as the document</li>
+			</ul>
+			<h3 id="htmx:validation:validate">
+				<a class="zola-anchor" href="#htmx:validation:validate" aria-label="Anchor link for: htmx:validation:validate">Event - <code>htmx:validation:validate</code></a>
+			</h3>
+			<p>This event is triggered before an element is validated. It can be used with the <code>elt.setCustomValidity()</code> method to implement custom validation rules.</p>
+			<pre
+				data-lang="html"
+				style="background-color: #1f2329; color: #abb2bf"
+				class="language-html"><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&quot;/test&quot;</span><span>&gt;
 </span><span>  &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">_</span><span>=</span><span style="color:#98c379;">&quot;on htmx:validation:validate
 </span><span style="color:#98c379;">               if my.value != &#39;foo&#39;
 </span><span style="color:#98c379;">                  call me.setCustomValidity(&#39;Please enter the value foo&#39;)
@@ -519,79 +681,95 @@ to implement custom validation rules.</p>
 </span><span>         </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&quot;example&quot;</span><span>&gt;
 </span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
 </span></code></pre>
-<h5 id="details-40"><a class="zola-anchor" href="#details-40" aria-label="Anchor link for: details-40">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element to be validated</li>
-</ul>
-<h3 id="htmx:validation:failed"><a class="zola-anchor" href="#htmx:validation:failed" aria-label="Anchor link for: htmx:validation:failed">Event - <code>htmx:validation:failed</code></a></h3>
-<p>This event is triggered when an element fails validation. If <code>preventDefault()</code> is invoked on the event, the reportValidity() enabled by <code>htmx.config.reportValidityOfForms</code> will not be called.</p>
-<h5 id="details-41"><a class="zola-anchor" href="#details-41" aria-label="Anchor link for: details-41">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that failed validation</li>
-<li><code>detail.message</code> - the validation error message</li>
-<li><code>detail.validity</code> - the validity object, which contains properties specifying how validation failed</li>
-</ul>
-<h3 id="htmx:validation:halted"><a class="zola-anchor" href="#htmx:validation:halted" aria-label="Anchor link for: htmx:validation:halted">Event - <code>htmx:validation:halted</code></a></h3>
-<p>This event is triggered when a request is halted due to validation errors.</p>
-<h5 id="details-42"><a class="zola-anchor" href="#details-42" aria-label="Anchor link for: details-42">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-<li><code>detail.errors</code> - an array of error objects with the invalid elements and errors associated with them</li>
-</ul>
-<h3 id="htmx:xhr:abort"><a class="zola-anchor" href="#htmx:xhr:abort" aria-label="Anchor link for: htmx:xhr:abort">Event - <code>htmx:xhr:abort</code></a></h3>
-<p>This event is triggered when an ajax request aborts</p>
-<h5 id="details-43"><a class="zola-anchor" href="#details-43" aria-label="Anchor link for: details-43">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-</ul>
-<h3 id="htmx:xhr:loadstart"><a class="zola-anchor" href="#htmx:xhr:loadstart" aria-label="Anchor link for: htmx:xhr:loadstart">Event - <code>htmx:xhr:loadstart</code></a></h3>
-<p>This event is triggered when an ajax request starts</p>
-<h5 id="details-44"><a class="zola-anchor" href="#details-44" aria-label="Anchor link for: details-44">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-</ul>
-<h3 id="htmx:xhr:loadend"><a class="zola-anchor" href="#htmx:xhr:loadend" aria-label="Anchor link for: htmx:xhr:loadend">Event - <code>htmx:xhr:loadend</code></a></h3>
-<p>This event is triggered when an ajax request finishes</p>
-<h5 id="details-45"><a class="zola-anchor" href="#details-45" aria-label="Anchor link for: details-45">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-</ul>
-<h3 id="htmx:xhr:progress"><a class="zola-anchor" href="#htmx:xhr:progress" aria-label="Anchor link for: htmx:xhr:progress">Event - <code>htmx:xhr:progress</code></a></h3>
-<p>This event is triggered periodically when an ajax request that supports progress is in flight</p>
-<h5 id="details-46"><a class="zola-anchor" href="#details-46" aria-label="Anchor link for: details-46">Details</a></h5>
-<ul>
-<li><code>detail.elt</code> - the element that triggered the request</li>
-</ul>
+			<h5 id="details-40"><a class="zola-anchor" href="#details-40" aria-label="Anchor link for: details-40">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element to be validated</li>
+			</ul>
+			<h3 id="htmx:validation:failed">
+				<a class="zola-anchor" href="#htmx:validation:failed" aria-label="Anchor link for: htmx:validation:failed">Event - <code>htmx:validation:failed</code></a>
+			</h3>
+			<p>
+				This event is triggered when an element fails validation. If <code>preventDefault()</code> is invoked on the event, the reportValidity() enabled by
+				<code>htmx.config.reportValidityOfForms</code> will not be called.
+			</p>
+			<h5 id="details-41"><a class="zola-anchor" href="#details-41" aria-label="Anchor link for: details-41">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that failed validation</li>
+				<li><code>detail.message</code> - the validation error message</li>
+				<li><code>detail.validity</code> - the validity object, which contains properties specifying how validation failed</li>
+			</ul>
+			<h3 id="htmx:validation:halted">
+				<a class="zola-anchor" href="#htmx:validation:halted" aria-label="Anchor link for: htmx:validation:halted">Event - <code>htmx:validation:halted</code></a>
+			</h3>
+			<p>This event is triggered when a request is halted due to validation errors.</p>
+			<h5 id="details-42"><a class="zola-anchor" href="#details-42" aria-label="Anchor link for: details-42">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+				<li><code>detail.errors</code> - an array of error objects with the invalid elements and errors associated with them</li>
+			</ul>
+			<h3 id="htmx:xhr:abort">
+				<a class="zola-anchor" href="#htmx:xhr:abort" aria-label="Anchor link for: htmx:xhr:abort">Event - <code>htmx:xhr:abort</code></a>
+			</h3>
+			<p>This event is triggered when an ajax request aborts</p>
+			<h5 id="details-43"><a class="zola-anchor" href="#details-43" aria-label="Anchor link for: details-43">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+			</ul>
+			<h3 id="htmx:xhr:loadstart">
+				<a class="zola-anchor" href="#htmx:xhr:loadstart" aria-label="Anchor link for: htmx:xhr:loadstart">Event - <code>htmx:xhr:loadstart</code></a>
+			</h3>
+			<p>This event is triggered when an ajax request starts</p>
+			<h5 id="details-44"><a class="zola-anchor" href="#details-44" aria-label="Anchor link for: details-44">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+			</ul>
+			<h3 id="htmx:xhr:loadend">
+				<a class="zola-anchor" href="#htmx:xhr:loadend" aria-label="Anchor link for: htmx:xhr:loadend">Event - <code>htmx:xhr:loadend</code></a>
+			</h3>
+			<p>This event is triggered when an ajax request finishes</p>
+			<h5 id="details-45"><a class="zola-anchor" href="#details-45" aria-label="Anchor link for: details-45">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+			</ul>
+			<h3 id="htmx:xhr:progress">
+				<a class="zola-anchor" href="#htmx:xhr:progress" aria-label="Anchor link for: htmx:xhr:progress">Event - <code>htmx:xhr:progress</code></a>
+			</h3>
+			<p>This event is triggered periodically when an ajax request that supports progress is in flight</p>
+			<h5 id="details-46"><a class="zola-anchor" href="#details-46" aria-label="Anchor link for: details-46">Details</a></h5>
+			<ul>
+				<li><code>detail.elt</code> - the element that triggered the request</li>
+			</ul>
+		</div>
 
-</div>
-
-<footer>
-    <div class="c content ">
-        <div class="row">
-            <div class="6 col footer-haiku">
-                <h2>haiku</h2>
-                <p><em>
-                    javascript fatigue:<br>
-                    longing for a hypertext<br>
-                    already in hand
-                </em></p>
-            </div>
-            <div class="6 col footer-menu">
-                <div><a href="/docs/">docs</a></div>
-                <div><a href="/reference/">reference</a></div>
-                <div><a href="/examples/">examples</a></div>
-                <div><a href="/talk/">talk</a></div>
-                <div><a href="/essays/">essays</a></div>
-                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
-            </div>
-        </div>
-        <div class="row" style="text-align: center;">
-            <div class="col">
-                <img src="/img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;">
-            </div>
-        </div>
-    </div>
-</footer>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-</body>
+		<footer>
+			<div class="c content">
+				<div class="row">
+					<div class="6 col footer-haiku">
+						<h2>haiku</h2>
+						<p>
+							<em>
+								javascript fatigue:<br />
+								longing for a hypertext<br />
+								already in hand
+							</em>
+						</p>
+					</div>
+					<div class="6 col footer-menu">
+						<div><a href="/docs/">docs</a></div>
+						<div><a href="/reference/">reference</a></div>
+						<div><a href="/examples/">examples</a></div>
+						<div><a href="/talk/">talk</a></div>
+						<div><a href="/essays/">essays</a></div>
+						<div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+					</div>
+				</div>
+				<div class="row" style="text-align: center">
+					<div class="col">
+						<img src="/img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em" />
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+	</body>
 </html>
