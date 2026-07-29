@@ -10,7 +10,11 @@ bun run css
 bun run format
 
 '# delete previous distribution files'
-Remove-Item -Path './dist/*' -Force
+if (Test-Path -LiteralPath './dist') {
+	Remove-Item -LiteralPath './dist' -Recurse -Force
+}
+New-Item -ItemType Directory -Path './dist' | Out-Null
+New-Item -ItemType Directory -Path './releases' -Force | Out-Null
 
 '# copy distribution files'
 Copy-Item -Path '.\background.js' -Destination './dist/background.js' -Force -Verbose
@@ -39,7 +43,7 @@ Compress-Archive -Path './dist/*' -DestinationPath $zipFilePath -Force
 "  created zip file: $zipFilePath"
 
 "# move $($zipFilePath) to ./releases"
-Get-ChildItem -Path './dist/*.zip' | Move-Item -Destination './releases/'
+Get-ChildItem -Path './dist/*.zip' | Move-Item -Destination './releases/' -Force
 
 '# build chrome dist'
 Copy-Item -Path '.\manifest.json' -Destination './dist/manifest.json' -Force -Verbose
@@ -53,4 +57,4 @@ Compress-Archive -Path './dist/*' -DestinationPath $zipFilePath -Force
 "  created zip file: $zipFilePath"
 
 "# move $($zipFilePath) to ./releases"
-Get-ChildItem -Path './dist/*.zip' | Move-Item -Destination './releases/'
+Get-ChildItem -Path './dist/*.zip' | Move-Item -Destination './releases/' -Force

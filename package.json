@@ -15,13 +15,14 @@
 		"chrome-extension"
 	],
 	"scripts": {
-		"css": "tailwindcss -c ./tailwind.config.mjs -i ./tailwind.css -o ./output.css --minify",
+		"css": "tailwindcss -i ./tailwind.css -o ./output.css --minify",
 		"format": "prettier --write .",
 		"lint": "eslint .",
 		"build": "pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass \"./.build.ps1\""
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
+		"@tailwindcss/cli": "^4.1.15",
 		"eslint": "^10.8.0",
 		"globals": "^17.8.0",
 		"prettier": "^3.9.6",
