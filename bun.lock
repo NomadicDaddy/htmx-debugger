@@ -6,12 +6,12 @@
       "name": "htmx-debugger",
       "devDependencies": {
         "@eslint/js": "^10.0.1",
-        "@tailwindcss/cli": "^4.1.15",
+        "@tailwindcss/cli": "^4.3.3",
         "eslint": "^10.8.0",
         "globals": "^17.8.0",
         "prettier": "^3.9.6",
         "prettier-plugin-tailwindcss": "^0.8.1",
-        "tailwindcss": "^4.1.15",
+        "tailwindcss": "^4.3.3",
       },
       "peerDependencies": {
         "htmx.org": "^2.0.10 || >=4.0.0-beta5 <5",
