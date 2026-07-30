@@ -2,6 +2,7 @@
 	/* global Element, XMLHttpRequest, Event */
 	const htmxDebugger = {
 		isConnected: false,
+		isContextInvalidated: false,
 		eventCounter: 0,
 		maxEvents: 1000, // Maximum number of events to log before resetting
 		lastResetTime: Date.now(),
@@ -14,30 +15,25 @@
 		reconnectDelay: 30000, // 30 seconds delay between reconnection attempts
 
 		init: async function () {
+			if (this.isContextInvalidated) return;
+
 			try {
 				console.log('Initializing htmx-debugger...');
 				if (!this.isExtensionEnvironment()) {
-					console.warn('Not running in a Chrome extension environment.');
+					this.handleExtensionInvalidated();
 					return;
 				}
 				console.log('Extension environment valid, continuing initialization...');
 
 				this.setupHtmxLogger();
 				this.setupMessageListener();
-				await this.verifyConnection();
+				const connected = await this.verifyConnection();
+				if (!connected || this.isContextInvalidated) return;
 				this.startConnectionCheck();
 
-				// Only add the update listener if chrome.runtime is available
-				if (chrome.runtime && chrome.runtime.onUpdateAvailable) {
-					chrome.runtime.onUpdateAvailable.addListener(() => {
-						console.log('Extension update available. Reloading...');
-						chrome.runtime.reload();
-					});
-				}
-
-				// Check if the extension is still valid
 				if (!this.isExtensionValid()) {
-					throw new Error('Extension context invalidated');
+					this.handleExtensionInvalidated();
+					return;
 				}
 				htmxEvents.forEach((event) => {
 					document.body.addEventListener(event, this.logEvent.bind(this));
@@ -45,35 +41,30 @@
 
 				// console.log('htmx event listeners set up');
 			} catch (error) {
+				if (this.isContextInvalidationError(error)) {
+					this.handleExtensionInvalidated();
+					return;
+				}
 				console.error('Error during htmx-debugger initialization:', error);
 				this.handleError(error);
-				// Attempt to reinitialize after a delay
-				setTimeout(() => this.init(), 5000);
+				if (!this.isContextInvalidated) {
+					setTimeout(() => this.init(), 5000);
+				}
 			}
 		},
 
 		isExtensionEnvironment: function () {
-			// console.log('Checking extension environment...');
-			if (typeof chrome === 'undefined') {
-				console.warn('Chrome API is not available');
-				return false;
-			}
-			if (!chrome.runtime) {
-				console.warn('chrome.runtime is not available');
-				return false;
-			}
+			if (this.isContextInvalidated || typeof chrome === 'undefined') return false;
+
 			try {
-				chrome.runtime.getURL('');
-				// console.log('chrome.runtime.id exists:', !!chrome.runtime.id);
-				return true;
-			} catch (error) {
-				console.warn('Extension context is invalid:', error.message);
+				return Boolean(chrome.runtime && chrome.runtime.id);
+			} catch {
 				return false;
 			}
 		},
 
 		isExtensionValid: function () {
-			return this.isExtensionEnvironment() && chrome.runtime.id;
+			return !this.isContextInvalidated && this.isExtensionEnvironment();
 		},
 
 		getElementInfo: function (element) {
@@ -129,16 +120,15 @@
 		},
 
 		logEvent: function (event) {
+			if (this.isContextInvalidated) return;
+
 			if (this.isCircuitBroken) {
-				console.warn('Circuit breaker active. Skipping event logging.');
 				return;
 			}
 
 			if (this.eventCounter >= this.maxEvents) {
 				const now = Date.now();
 				if (now - this.lastResetTime < 60000) {
-					// If less than a minute since last reset
-					console.warn('Too many events logged in a short time. Skipping event logging.');
 					return;
 				}
 				this.eventCounter = 0;
@@ -265,6 +255,8 @@
 		},
 
 		sendMessage: function (data) {
+			if (this.isContextInvalidated) return;
+
 			if (!this.isConnected) {
 				console.warn('Not connected to background script. Attempting to reconnect...');
 				this.verifyConnection();
@@ -279,18 +271,37 @@
 						data: data,
 					},
 					() => {
-						if (chrome.runtime.lastError) {
-							console.error('Error sending message:', chrome.runtime.lastError);
-							this.handleError(new Error(chrome.runtime.lastError.message));
-							this.isConnected = false;
-							this.attemptReconnection();
-						} else {
+						let runtimeError;
+						try {
+							runtimeError = chrome.runtime.lastError;
+						} catch (error) {
+							this.handleError(error);
+							return;
+						}
+
+						if (!runtimeError) {
 							// console.log('Message sent successfully:', response);
 							this.reconnectAttempts = 0; // Reset reconnect attempts on successful message
+							return;
 						}
+
+						if (this.isContextInvalidationError(runtimeError)) {
+							this.handleExtensionInvalidated();
+							return;
+						}
+
+						console.error('Error sending message:', runtimeError);
+						this.handleError(new Error(runtimeError.message));
+						this.isConnected = false;
+						this.attemptReconnection();
 					}
 				);
 			} catch (error) {
+				if (this.isContextInvalidationError(error)) {
+					this.handleExtensionInvalidated();
+					return;
+				}
+
 				console.error('Error sending message:', error);
 				this.handleError(error);
 				this.isConnected = false;
@@ -353,7 +364,17 @@
 			}
 		},
 
+		isContextInvalidationError: function (error) {
+			const message = typeof error === 'string' ? error : error && error.message;
+			return Boolean(message && message.includes('Extension context invalidated'));
+		},
+
 		handleError: function (error) {
+			if (this.isContextInvalidationError(error)) {
+				this.handleExtensionInvalidated();
+				return;
+			}
+
 			console.error('htmx-debugger error:', error);
 			this.errorCount++;
 
@@ -361,31 +382,30 @@
 				this.triggerCircuitBreaker();
 			}
 
-			// Check for the specific "Extension context invalidated" error
-			if (error.message.includes('Extension context invalidated')) {
-				this.handleExtensionInvalidated();
-			} else {
-				this.sendMessage({
-					type: 'ERROR',
-					error: error.message,
-					stack: error.stack,
-				});
-			}
+			this.sendMessage({
+				type: 'ERROR',
+				error: error.message,
+				stack: error.stack,
+			});
 		},
 
 		handleExtensionInvalidated: function () {
-			console.warn('Extension context invalidated. Attempting to reconnect...');
+			if (this.isContextInvalidated) return;
+
+			this.isContextInvalidated = true;
 			this.isConnected = false;
-			// Instead of reloading, we'll try to reinitialize
-			setTimeout(() => this.init(), 5000);
 		},
 
 		attemptReconnection: function () {
+			if (this.isContextInvalidated) return;
+
 			if (this.reconnectAttempts < this.maxReconnectAttempts) {
 				this.reconnectAttempts++;
 				console.log(`Reconnection attempt ${this.reconnectAttempts} of ${this.maxReconnectAttempts}`);
 				setTimeout(() => {
-					this.verifyConnection();
+					if (!this.isContextInvalidated) {
+						this.verifyConnection();
+					}
 				}, this.reconnectDelay);
 			} else {
 				console.error('Max reconnection attempts reached. Please reload the page.');
@@ -398,6 +418,8 @@
 				console.warn('Circuit breaker triggered. Pausing htmx-debugger operations.');
 				this.isCircuitBroken = true;
 				setTimeout(() => {
+					if (this.isContextInvalidated) return;
+
 					console.log('Circuit breaker reset. Resuming htmx-debugger operations.');
 					this.isCircuitBroken = false;
 					this.errorCount = 0;
@@ -410,21 +432,36 @@
 		verifyConnection: function () {
 			return new Promise((resolve) => {
 				const checkConnection = () => {
-					if (this.isExtensionEnvironment()) {
-						if (chrome.runtime && chrome.runtime.sendMessage) {
+					if (this.isContextInvalidated) {
+						resolve(false);
+						return;
+					}
+
+					if (!this.isExtensionEnvironment()) {
+						this.handleExtensionInvalidated();
+						resolve(false);
+						return;
+					}
+
+					try {
+						if (chrome.runtime.sendMessage) {
 							chrome.runtime.sendMessage(
 								{
 									type: 'CONNECTION_TEST',
 									data: { message: 'Content script connection check' },
 								},
 								() => {
-									if (chrome.runtime.lastError) {
-										console.warn('Connection check failed, retrying...', chrome.runtime.lastError);
+									const runtimeError = chrome.runtime.lastError;
+									if (runtimeError && this.isContextInvalidationError(runtimeError)) {
+										this.handleExtensionInvalidated();
+										resolve(false);
+									} else if (runtimeError) {
+										console.warn('Connection check failed, retrying...', runtimeError);
 										setTimeout(checkConnection, 1000);
 									} else {
 										this.isConnected = true;
 										this.reconnectAttempts = 0;
-										resolve();
+										resolve(true);
 									}
 								}
 							);
@@ -432,9 +469,14 @@
 							console.warn('chrome.runtime.sendMessage not available, retrying...');
 							setTimeout(checkConnection, 1000);
 						}
-					} else {
-						console.warn('Extension environment not valid, retrying...');
-						setTimeout(checkConnection, 1000);
+					} catch (error) {
+						if (this.isContextInvalidationError(error)) {
+							this.handleExtensionInvalidated();
+							resolve(false);
+						} else {
+							console.warn('Connection check failed, retrying...', error);
+							setTimeout(checkConnection, 1000);
+						}
 					}
 				};
 
@@ -444,6 +486,8 @@
 
 		startConnectionCheck: function () {
 			const periodicCheck = () => {
+				if (this.isContextInvalidated) return;
+
 				// console.log('Running periodic check...');
 				try {
 					if (this.isExtensionEnvironment()) {
@@ -457,15 +501,18 @@
 								this.handleExtensionInvalidated();
 							});
 					} else {
-						console.warn('Extension environment not valid, retrying periodic check...');
 						this.handleExtensionInvalidated();
 					}
 				} catch (error) {
-					console.error('Error during periodic check:', error);
-					this.handleExtensionInvalidated();
+					if (this.isContextInvalidationError(error)) {
+						this.handleExtensionInvalidated();
+					} else {
+						console.error('Error during periodic check:', error);
+					}
 				} finally {
-					// console.log('Scheduling next check...');
-					setTimeout(periodicCheck, 5000);
+					if (!this.isContextInvalidated) {
+						setTimeout(periodicCheck, 5000);
+					}
 				}
 			};
 
@@ -476,11 +523,35 @@
 	// At the top of the IIFE, after the htmxDebugger object definition
 	const htmxEvents = [
 		'htmx:abort',
+		'htmx:after:cleanup',
+		'htmx:after:history:push',
+		'htmx:after:history:replace',
+		'htmx:after:history:update',
+		'htmx:after:implicitInheritance',
+		'htmx:after:init',
+		'htmx:after:process',
+		'htmx:after:request',
+		'htmx:after:settle',
+		'htmx:after:swap',
+		'htmx:after:viewTransition',
 		'htmx:afterOnLoad',
 		'htmx:afterProcessNode',
 		'htmx:afterRequest',
 		'htmx:afterSettle',
 		'htmx:afterSwap',
+		'htmx:before:cleanup',
+		'htmx:before:history:restore',
+		'htmx:before:history:update',
+		'htmx:before:init',
+		'htmx:before:morph:attr',
+		'htmx:before:morph:node',
+		'htmx:before:on:init',
+		'htmx:before:process',
+		'htmx:before:request',
+		'htmx:before:response',
+		'htmx:before:settle',
+		'htmx:before:swap',
+		'htmx:before:viewTransition',
 		'htmx:beforeCleanupElement',
 		'htmx:beforeHistorySave',
 		'htmx:beforeHistoryUpdate',
@@ -490,8 +561,11 @@
 		'htmx:beforeSend',
 		'htmx:beforeSwap',
 		'htmx:beforeTransition',
+		'htmx:config:request',
 		'htmx:configRequest',
 		'htmx:confirm',
+		'htmx:error',
+		'htmx:finally:request',
 		'htmx:historyCacheError',
 		'htmx:historyCacheHit',
 		'htmx:historyCacheMiss',
@@ -505,13 +579,17 @@
 		'htmx:oobBeforeSwap',
 		'htmx:oobErrorNoTarget',
 		'htmx:onLoadError',
+		'htmx:process',
 		'htmx:prompt',
 		'htmx:pushedIntoHistory',
 		'htmx:replacedInHistory',
+		'htmx:response:error',
 		'htmx:responseError',
 		'htmx:sendAbort',
 		'htmx:sendError',
+		'htmx:scope',
 		'htmx:sseError',
+		'htmx:swap:finally',
 		'htmx:swapError',
 		'htmx:targetError',
 		'htmx:timeout',
@@ -532,8 +610,7 @@
 				htmxDebugger.init();
 				console.log('htmx-debugger initialized');
 			} else {
-				console.warn('Not running in a Chrome extension environment. Retrying in 1 second...');
-				setTimeout(initializeDebugger, 1000);
+				htmxDebugger.handleExtensionInvalidated();
 			}
 		} catch (error) {
 			console.error('Error initializing htmx-debugger:', error);

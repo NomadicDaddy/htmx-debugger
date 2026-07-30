@@ -278,9 +278,19 @@ function filterDebugInfo(filter) {
 
 		if (filter === 'ALL') {
 			display = 'block';
-		} else if (filter === 'REQUEST' && (eventType.includes('beforeRequest') || eventType.includes('beforeSend') || eventType.includes('xhr:loadstart'))) {
+		} else if (
+			filter === 'REQUEST' &&
+			(eventType.includes('beforeRequest') || eventType.includes('before:request') || eventType.includes('beforeSend') || eventType.includes('xhr:loadstart'))
+		) {
 			display = 'block';
-		} else if (filter === 'RESPONSE' && (eventType.includes('afterRequest') || eventType.includes('xhr:loadend') || eventType.includes('load'))) {
+		} else if (
+			filter === 'RESPONSE' &&
+			(eventType.includes('afterRequest') ||
+				eventType.includes('after:request') ||
+				eventType.includes('before:response') ||
+				eventType.includes('xhr:loadend') ||
+				eventType.includes('load'))
+		) {
 			display = 'block';
 		}
 
@@ -430,8 +440,7 @@ function determineGroupName(event) {
 	} else if (event.target && event.target.tagName) {
 		return event.target.tagName.toLowerCase();
 	} else if (event.type && event.type.startsWith('htmx:')) {
-		// Instead of returning 'htmx', let's categorize based on the specific htmx event type
-		return event.type.split(':')[1]; // This will return the part after 'htmx:'
+		return event.type.slice('htmx:'.length);
 	} else {
 		return 'other';
 	}

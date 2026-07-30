@@ -5,8 +5,10 @@ let messageCounter = 0;
 const MAX_QUEUE_SIZE = 1000;
 const RATE_LIMIT_INTERVAL = 1000; // 1 second
 const MAX_MESSAGES_PER_INTERVAL = 100;
+const MAX_PENDING_EVENTS_PER_TAB = 250;
 
 let heartbeatIntervals = {};
+let pendingEvents = {};
 
 function logWithTimestamp(message, data) {
 	console.log(`[${new Date().toISOString()}] ${message}`, data);
@@ -53,29 +55,53 @@ function queueMessage(message, sender, sendResponse) {
 	processMessageQueue();
 }
 
+function forwardEventToPanel(tabId, request) {
+	connections[tabId].postMessage({
+		type: 'HTMX_EVENT_FOR_PANEL',
+		data: request.data,
+	});
+	logWithTimestamp(`htmx event sent to panel for tab ${tabId}`);
+}
+
+function queuePendingEvent(tabId, request) {
+	if (!pendingEvents[tabId]) {
+		pendingEvents[tabId] = [];
+	}
+
+	const events = pendingEvents[tabId];
+	if (events.length >= MAX_PENDING_EVENTS_PER_TAB) {
+		events.shift();
+	}
+	events.push(request);
+}
+
+function flushPendingEvents(tabId) {
+	const events = pendingEvents[tabId];
+	if (!events || events.length === 0) return;
+
+	logWithTimestamp(`Forwarding ${events.length} pending htmx events to panel for tab ${tabId}`);
+	events.forEach((request) => forwardEventToPanel(tabId, request));
+	delete pendingEvents[tabId];
+}
+
 function handleMessage(request, sender, sendResponse) {
 	logWithTimestamp('Processing message:', request);
 
 	if (sender.tab) {
 		const tabId = sender.tab.id;
-		if (tabId in connections) {
-			if (request.type === 'HTMX_EVENT' || request.type.startsWith('htmx:')) {
+		if (request.type === 'HTMX_EVENT' || request.type.startsWith('htmx:')) {
+			if (tabId in connections) {
 				logWithTimestamp(`Forwarding htmx event to panel for tab ${tabId}:`, request);
-				connections[tabId].postMessage({
-					type: 'HTMX_EVENT_FOR_PANEL',
-					data: request.data, // Ensure we're sending the full data
-				});
-				logWithTimestamp(`htmx event sent to panel for tab ${tabId}`);
+				forwardEventToPanel(tabId, request);
 			} else {
-				// Only forward non-CONNECTION_TEST messages to the panel
-				if (request.type !== 'CONNECTION_TEST') {
-					logWithTimestamp(`Forwarding message to panel for tab ${tabId}:`, request);
-					connections[tabId].postMessage(request);
-					logWithTimestamp(`Message sent to panel for tab ${tabId}`);
-				} else {
-					logWithTimestamp(`Received CONNECTION_TEST from tab ${tabId}`);
-				}
+				queuePendingEvent(tabId, request);
 			}
+		} else if (request.type === 'CONNECTION_TEST') {
+			logWithTimestamp(`Received CONNECTION_TEST from tab ${tabId}`);
+		} else if (tabId in connections) {
+			logWithTimestamp(`Forwarding message to panel for tab ${tabId}:`, request);
+			connections[tabId].postMessage(request);
+			logWithTimestamp(`Message sent to panel for tab ${tabId}`);
 		} else {
 			logWithTimestamp('Tab not found in connection list:', tabId);
 		}
@@ -119,6 +145,7 @@ chrome.runtime.onConnect.addListener(function (port) {
 			connections[message.tabId] = port;
 			logWithTimestamp(`Panel connected for tab ${message.tabId}`);
 			startHeartbeat(message.tabId);
+			flushPendingEvents(message.tabId);
 		}
 	};
 
@@ -156,9 +183,8 @@ chrome.runtime.onInstalled.addListener(() => {
 	chrome.alarms.create('log-stats', { periodInMinutes: 5 }); // Log stats every 5 minutes
 });
 
-chrome.runtime.onUpdateAvailable.addListener(() => {
-	logWithTimestamp('Extension update available. Reloading...');
-	chrome.runtime.reload();
+chrome.runtime.onUpdateAvailable.addListener((details) => {
+	logWithTimestamp(`Extension update ${details.version} available; it will be installed when the service worker becomes idle.`);
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -193,16 +219,4 @@ globalThis.addEventListener('unhandledrejection', (event) => {
 
 chrome.runtime.onInstalled.addListener(() => {
 	logWithTimestamp('Extension installed');
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-	if (message.type === 'heartbeat') {
-		sendResponse({ status: 'alive' });
-	}
-	if (message.type === 'HTMX_EVENT') {
-		chrome.runtime.sendMessage({
-			type: 'HTMX_EVENT_FOR_PANEL',
-			data: message.data,
-		});
-	}
 });
