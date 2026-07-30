@@ -1,8 +1,23 @@
 (function () {
 	/* global Element, XMLHttpRequest, Event */
+
+	// Unshadowable accessors for element properties, captured before any page script runs.
+	const elementAccessor = (name) => {
+		const descriptor = typeof Element !== 'undefined' && Object.getOwnPropertyDescriptor(Element.prototype, name);
+		return descriptor && descriptor.get
+			? descriptor.get
+			: function () {
+					return this[name];
+				};
+	};
+	const elementAttributes = elementAccessor('attributes');
+	const elementTagName = elementAccessor('tagName');
+
 	const htmxDebugger = {
 		isConnected: false,
 		isContextInvalidated: false,
+		hasLoggedCloneFailure: false,
+		hasWarnedDisconnected: false,
 		eventCounter: 0,
 		maxEvents: 1000, // Maximum number of events to log before resetting
 		lastResetTime: Date.now(),
@@ -18,14 +33,11 @@
 			if (this.isContextInvalidated) return;
 
 			try {
-				console.log('Initializing htmx-debugger...');
 				if (!this.isExtensionEnvironment()) {
 					this.handleExtensionInvalidated();
 					return;
 				}
-				console.log('Extension environment valid, continuing initialization...');
 
-				this.setupHtmxLogger();
 				this.setupMessageListener();
 				const connected = await this.verifyConnection();
 				if (!connected || this.isContextInvalidated) return;
@@ -70,17 +82,31 @@
 		getElementInfo: function (element) {
 			if (!element) return null;
 			try {
-				const attributes = Array.from(element.attributes || []).map((attr) => ({
+				if (typeof Element === 'undefined' || !(element instanceof Element)) {
+					// document, window, and other non-element event targets
+					return { id: '', tagName: '', className: '', attributes: [] };
+				}
+
+				// Read through Element.prototype rather than off the element. A form whose
+				// controls are named `id`, `attributes`, or `getAttribute` shadows those
+				// properties with the control itself, which then leaks a DOM node into the
+				// message and makes chrome.runtime.sendMessage fail to clone it.
+				const attributes = Array.from(elementAttributes.call(element)).map((attr) => ({
 					name: attr.name,
 					value: attr.value,
 				}));
 
 				const hxAttributes = attributes.filter((attr) => attr.name.startsWith('hx-'));
+				const attributeValue = (name) => {
+					const attr = attributes.find((candidate) => candidate.name === name);
+					return attr ? attr.value : '';
+				};
 
 				return {
-					id: element.id || '',
-					tagName: element.tagName || '',
-					className: element.className || '',
+					id: attributeValue('id'),
+					tagName: elementTagName.call(element),
+					// SVG elements expose className as a non-cloneable SVGAnimatedString
+					className: attributeValue('class'),
 					attributes: attributes,
 					hxAttributes: hxAttributes.length > 0 ? hxAttributes : undefined,
 				};
@@ -190,13 +216,6 @@
 				return undefined;
 			}
 
-			if (input && (inputType === 'object' || inputType === 'function')) {
-				if (seen.has(input)) {
-					return '[Circular]';
-				}
-				seen.add(input);
-			}
-
 			if (typeof Element !== 'undefined' && input instanceof Element) {
 				return this.getElementInfo(input);
 			}
@@ -235,20 +254,39 @@
 				}, {});
 			}
 
+			// Only containers are tracked for cycles, and only while they are on the current
+			// path — otherwise two sibling references to the same element (htmx routinely
+			// puts the same node on `elt` and `target`) report the second one as circular.
 			if (Array.isArray(input)) {
-				return input.map((item) => this.sanitizeDetail(item, seen)).filter((item) => item !== undefined);
+				if (seen.has(input)) {
+					return '[Circular]';
+				}
+				seen.add(input);
+				try {
+					return input.map((item) => this.sanitizeDetail(item, seen)).filter((item) => item !== undefined);
+				} finally {
+					seen.delete(input);
+				}
 			}
 
 			const proto = Object.getPrototypeOf(input);
 			if (proto === Object.prototype || proto === null) {
-				const output = {};
-				Object.keys(input).forEach((key) => {
-					const value = this.sanitizeDetail(input[key], seen);
-					if (value !== undefined) {
-						output[key] = value;
-					}
-				});
-				return output;
+				if (seen.has(input)) {
+					return '[Circular]';
+				}
+				seen.add(input);
+				try {
+					const output = {};
+					Object.keys(input).forEach((key) => {
+						const value = this.sanitizeDetail(input[key], seen);
+						if (value !== undefined) {
+							output[key] = value;
+						}
+					});
+					return output;
+				} finally {
+					seen.delete(input);
+				}
 			}
 
 			return input.toString ? input.toString() : Object.prototype.toString.call(input);
@@ -258,7 +296,12 @@
 			if (this.isContextInvalidated) return;
 
 			if (!this.isConnected) {
-				console.warn('Not connected to background script. Attempting to reconnect...');
+				// sendMessage runs once per htmx event, so this warns only on the first
+				// dropped event after a disconnect rather than on every one.
+				if (!this.hasWarnedDisconnected) {
+					this.hasWarnedDisconnected = true;
+					console.warn('htmx-debugger: not connected to the background script. Attempting to reconnect...');
+				}
 				this.verifyConnection();
 				return;
 			}
@@ -290,6 +333,11 @@
 							return;
 						}
 
+						if (this.isCloneError(runtimeError)) {
+							this.reportCloneFailure(runtimeError);
+							return;
+						}
+
 						console.error('Error sending message:', runtimeError);
 						this.handleError(new Error(runtimeError.message));
 						this.isConnected = false;
@@ -302,6 +350,11 @@
 					return;
 				}
 
+				if (this.isCloneError(error)) {
+					this.reportCloneFailure(error);
+					return;
+				}
+
 				console.error('Error sending message:', error);
 				this.handleError(error);
 				this.isConnected = false;
@@ -309,46 +362,9 @@
 			}
 		},
 
-		setupHtmxLogger: function () {
-			if (window.htmx && typeof window.htmx.process === 'function') {
-				if (window.htmx.process.__htmxDebuggerWrapped) {
-					return;
-				}
-				const originalProcess = window.htmx.process;
-				let processingCounter = 0;
-				const maxProcessingDepth = 100; // Prevent potential infinite loops
-
-				window.htmx.process = (elt) => {
-					if (processingCounter >= maxProcessingDepth) {
-						console.error('Maximum processing depth reached. Possible infinite loop detected.');
-						this.triggerCircuitBreaker();
-						return;
-					}
-
-					processingCounter++;
-					try {
-						const processInfo = {
-							type: 'htmx:process',
-							timestamp: new Date().toISOString(),
-							element: this.getElementInfo(elt),
-						};
-						this.sendMessage(processInfo);
-						// Use spread operator to pass arguments
-						return originalProcess.apply(window.htmx, [...arguments]);
-					} finally {
-						processingCounter--;
-					}
-				};
-				window.htmx.process.__htmxDebuggerWrapped = true;
-			} else {
-				// console.warn('htmx not found on the page - some debugging features may not work.');
-			}
-		},
-
 		setupMessageListener: function () {
 			if (chrome.runtime && chrome.runtime.onMessage) {
 				chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-					console.log('Content script received message:', message);
 					if (message.type === 'TEST') {
 						console.log('Received test message:', message.data);
 						sendResponse({ status: 'Test message received by content script' });
@@ -367,6 +383,22 @@
 		isContextInvalidationError: function (error) {
 			const message = typeof error === 'string' ? error : error && error.message;
 			return Boolean(message && message.includes('Extension context invalidated'));
+		},
+
+		isCloneError: function (error) {
+			if (error && error.name === 'DataCloneError') return true;
+			const message = typeof error === 'string' ? error : error && error.message;
+			return Boolean(message && /could not be cloned|could not (?:be )?serialized?/i.test(message));
+		},
+
+		reportCloneFailure: function (error) {
+			// A payload that fails structured cloning will fail again on retry, so the event is
+			// dropped rather than fed to handleError, which would trip the circuit breaker and
+			// flood the console on a page that emits the offending event repeatedly.
+			if (this.hasLoggedCloneFailure) return;
+
+			this.hasLoggedCloneFailure = true;
+			console.warn('htmx-debugger: dropped an event that could not be serialized. Further occurrences are suppressed.', error);
 		},
 
 		handleError: function (error) {
@@ -461,6 +493,7 @@
 									} else {
 										this.isConnected = true;
 										this.reconnectAttempts = 0;
+										this.hasWarnedDisconnected = false;
 										resolve(true);
 									}
 								}
@@ -579,7 +612,6 @@
 		'htmx:oobBeforeSwap',
 		'htmx:oobErrorNoTarget',
 		'htmx:onLoadError',
-		'htmx:process',
 		'htmx:prompt',
 		'htmx:pushedIntoHistory',
 		'htmx:replacedInHistory',
@@ -608,7 +640,6 @@
 		try {
 			if (htmxDebugger.isExtensionEnvironment()) {
 				htmxDebugger.init();
-				console.log('htmx-debugger initialized');
 			} else {
 				htmxDebugger.handleExtensionInvalidated();
 			}
