@@ -7,6 +7,22 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-30
+
+### Added
+
+- The debugger now captures htmx 4's colon-separated lifecycle events while continuing to
+  support htmx 2, including request and response filtering in the DevTools panel.
+
+### Fixed
+
+- Events emitted before the DevTools panel opens are kept in a bounded per-tab queue and shown
+  when the panel connects.
+- Reloading or updating the extension now stops invalidated content scripts cleanly instead of
+  retrying and filling Chrome's extension error list.
+- High-volume pages still apply the event limit without Chrome treating the expected rate limit
+  as an extension error.
+
 ## [1.1.1] - 2026-07-29
 
 ### Fixed

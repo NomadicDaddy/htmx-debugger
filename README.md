@@ -1,4 +1,4 @@
-# htmx-debugger v1.1.0 - 2026-07-29
+# htmx-debugger v1.2.0 - 2026-07-30
 
 ## Overview
 
@@ -9,6 +9,7 @@ htmx-debugger is a powerful browser extension (compatible with Chrome and Firefo
 ## Features
 
 - Real-time capture and display of htmx events
+- Support for htmx 2 and htmx 4 event names
 - Intelligent grouping of related events for easier analysis
 - Powerful search functionality to filter events
 - One-click clear button to reset the debugger view
@@ -129,6 +130,10 @@ By using htmx-debugger, users can be assured that their privacy is respected and
 
 ## Version History
 
+- v1.2.0 (2026-07-30): Added htmx 4 event support, replayed events captured before the DevTools
+  panel opens, and cleaned up extension reload and rate-limit errors
+- v1.1.1 (2026-07-29): Fixed the Tailwind v4 distribution build and aligned the browser manifest
+  versions
 - v1.1.0 (2026-07-29): Added parsed HTTP response headers to XHR event logging, added xhr:abort event capture, migrated build toolchain from npm to bun
 - v1.0.6 (2024-10-22): Added HX attributes to target element details, added snapshot information, added error handling and reporting, further reduced console log output
 - v1.0.5 (2024-10-11): Before/after request/response event capture, removed activeTab permission, reduced console log output
