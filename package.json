@@ -30,7 +30,7 @@
 		"tailwindcss": "^4.3.3"
 	},
 	"peerDependencies": {
-		"htmx.org": "^2.0.10 || >=4.0.0-beta5 <5"
+		"htmx.org": "^2.0.10 || >=4.0.0-beta6 <5"
 	},
 	"repository": {
 		"type": "git",
