@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "htmx-debugger",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "htmx-debugger - a debugging tool for htmx applications",
 	"permissions": ["activeTab", "alarms"],
 	"background": {

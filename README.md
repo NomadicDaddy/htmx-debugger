@@ -1,4 +1,4 @@
-# htmx-debugger v1.2.0 - 2026-07-30
+# htmx-debugger v1.2.1 - 2026-07-30
 
 ## Overview
 
@@ -130,6 +130,8 @@ By using htmx-debugger, users can be assured that their privacy is respected and
 
 ## Version History
 
+- v1.2.1 (2026-07-30): Fixed the console flood on pages that boost forms, quieted the content
+  script's per-page logging, and removed the htmx.process wrapper that never ran
 - v1.2.0 (2026-07-30): Added htmx 4 event support, replayed events captured before the DevTools
   panel opens, and cleaned up extension reload and rate-limit errors
 - v1.1.1 (2026-07-29): Fixed the Tailwind v4 distribution build and aligned the browser manifest
