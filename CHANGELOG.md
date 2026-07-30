@@ -7,6 +7,35 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-07-30
+
+### Fixed
+
+- Pages that boost forms no longer flood the console with
+  `DOMException: HTMLElement object could not be cloned`. A form control named `id`, `class`,
+  or `attributes` shadows the matching property on the form element, so element details are
+  now read through `Element.prototype` rather than off the element itself. This is the crash
+  reported in issue #8.
+- SVG elements no longer break event capture. Their `className` is an `SVGAnimatedString`
+  instead of a string, and the class is now read from the attribute.
+- An event that still fails to serialize is dropped with one console warning instead of being
+  retried, counted toward the circuit breaker, and logged again on every occurrence.
+- Element details are no longer reported as `[Circular]` when the same element appears twice
+  in one event, which htmx does routinely with `detail.elt` and `detail.target`.
+
+### Changed
+
+- The content script no longer logs its startup and per-message progress to the console of
+  every page it runs on. Warnings and errors are unchanged, and the "not connected to the
+  background script" warning now appears once per disconnect rather than once per event.
+- The htmx peer dependency range accepts the 4.0.0-beta6 prerelease.
+
+### Removed
+
+- Dropped the `htmx.process` wrapper and its synthetic `htmx:process` entry. Content scripts
+  run in an isolated world and never see the page's `window.htmx`, so the wrapper never ran.
+  htmx's own process events already report the same work, so the event log is unchanged.
+
 ## [1.2.0] - 2026-07-30
 
 ### Added
